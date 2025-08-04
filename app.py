@@ -25,4 +25,5 @@ def books():
     return render_template('index.html', tables=[df.to_html(classes='data')], titles=df.columns.values)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False,port=3000,host="0.0.0.0")
+
