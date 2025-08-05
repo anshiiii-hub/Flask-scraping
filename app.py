@@ -225,4 +225,5 @@ def show_crypto_gainers():
     return render_template('showcase.html', project_title="Crypto Gainers", description="Top gainer cryptocurrencies.", headers=headers, data=data, color=color, color_rgb=get_color_rgb(color), chart_labels=chart_labels, chart_data=chart_data, chart_label=chart_label)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False, port=3000, host="0.0.0.0")
+
