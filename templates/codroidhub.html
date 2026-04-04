@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block title %}CodroidHub - Summer Training{% endblock %}
+
+{% block extra_styles %}
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+    .font-handwritten { font-family: 'Caveat', cursive; }
+    .widget {
+        background: rgba(10, 20, 40, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 255, 255, 0.2);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+        transition: all 0.3s ease;
+    }
+    .widget:hover {
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        border-color: rgba(0, 255, 255, 0.4);
+    }
+    .polaroid-card {
+        background-color: #1e293b;
+        padding: 0.75rem;
+        padding-bottom: 3.5rem;
+        border-radius: 4px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        text-decoration: none;
+        color: #e0eafc;
+        border: 1px solid rgba(0, 255, 255, 0.2);
+    }
+    .polaroid-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+    .polaroid-image {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 2px;
+    }
+    .polaroid-caption {
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+    <div class="space-y-16">
+        
+        <!-- Main CodroidHub Introduction -->
+        <div class="widget p-8 text-center scroll-animate">
+            <h1 class="text-5xl md:text-7xl text-cyan-300 font-heading font-bold mb-4">My Summer at CodroidHub</h1>
+            <p class="text-lg text-slate-300 max-w-4xl mx-auto">
+                This summer, I had the incredible opportunity to join the team at CodroidHub Pvt. Ltd. for my industrial training, diving headfirst into the world of data analytics and engineering.
+            </p>
+        </div>
+
+        <!-- About CodroidHub -->
+        <div class="widget p-8 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-6 text-center">About CodroidHub Pvt. Ltd.</h2>
+            <p class="text-lg text-slate-300 max-w-4xl mx-auto text-center">
+                CodroidHub is more than just an IT and e-learning company—it’s a global launchpad for the next generation of digital architects, data storytellers, and AI pioneers. What makes CodroidHub special is its vibrant ecosystem that blends cutting-edge technology with hands-on projects and personalized mentorship.
+            </p>
+        </div>
+        
+        <!-- Core Pillars -->
+        <div class="widget p-8 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-6 text-center">Core Pillars of Innovation</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                <div class="p-4">
+                    <svg class="w-16 h-16 mx-auto mb-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>
+                    <h3 class="text-2xl font-heading text-white">Data Innovation</h3>
+                </div>
+                <div class="p-4">
+                    <svg class="w-16 h-16 mx-auto mb-4 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25z" /></svg>
+                    <h3 class="text-2xl font-heading text-white">AI Solutions</h3>
+                </div>
+                <div class="p-4">
+                    <svg class="w-16 h-16 mx-auto mb-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" /></svg>
+                    <h3 class="text-2xl font-heading text-white">Web Development</h3>
+                </div>
+                <div class="p-4">
+                    <svg class="w-16 h-16 mx-auto mb-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.542L16.5 21.75l-.398-1.208a3.375 3.375 0 00-2.455-2.456L12.75 18l1.208-.398a3.375 3.375 0 002.455-2.456L16.5 14.25l.398 1.208a3.375 3.375 0 002.456 2.456L20.25 18l-1.208.398a3.375 3.375 0 00-2.456 2.456z" /></svg>
+                    <h3 class="text-2xl font-heading text-white">Creative Tech</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Training Dashboard -->
+        <div class="widget p-8 scroll-animate">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl font-heading text-cyan-300 mb-4">My Training Journey</h2>
+                    <p class="text-lg text-slate-300 mb-6">
+                        My time at CodroidHub was an incredible deep-dive into the practical world of data. I had the opportunity to work on real-world problems, collaborating with a talented team to develop solutions that made a tangible impact.
+                    </p>
+                     <ul class="space-y-4 text-slate-300">
+                        <li class="flex items-start gap-3"><span class="text-cyan-400 mt-1">✓</span><span><strong>End-to-End Project Lifecycle:</strong> Managed projects from data acquisition and cleaning to model deployment and visualization.</span></li>
+                        <li class="flex items-start gap-3"><span class="text-cyan-400 mt-1">✓</span><span><strong>Advanced Technical Skills:</strong> Mastered advanced techniques in Python, SQL, and specialized libraries for web scraping and machine learning.</span></li>
+                        <li class="flex items-start gap-3"><span class="text-cyan-400 mt-1">✓</span><span><strong>Data Storytelling:</strong> Learned to transform complex analytical findings into clear, compelling narratives for stakeholders.</span></li>
+                    </ul>
+                </div>
+                <div class="space-y-8">
+                    <div class="text-center">
+                        <h3 class="font-handwritten text-3xl text-white mb-4">Technologies Applied</h3>
+                        <div class="h-64"><canvas id="techChart"></canvas></div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="font-handwritten text-3xl text-white mb-4">Skill Progression</h3>
+                        <div class="h-64"><canvas id="skillChart"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Projects -->
+        <div class="widget p-8 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-6 text-center">Key Projects & Contributions</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <a href="/projects/web-scraping" class="polaroid-card text-center">
+                    <img src="{{ url_for('static', filename='images/web scraping.png') }}" alt="Web Scraping" class="polaroid-image">
+                    <div class="polaroid-caption"><h4 class="font-bold font-handwritten text-lg">Web Scraping</h4></div>
+                </a>
+                 <a href="/projects/data-science" class="polaroid-card text-center">
+                    <img src="{{ url_for('static', filename='images/Data Science.png') }}" alt="Data Science" class="polaroid-image">
+                    <div class="polaroid-caption"><h4 class="font-bold font-handwritten text-lg">Data Science</h4></div>
+                </a>
+                 <a href="/projects/power-bi" class="polaroid-card text-center">
+                    <img src="{{ url_for('static', filename='images/Power BI.png') }}" alt="Power BI" class="polaroid-image">
+                    <div class="polaroid-caption"><h4 class="font-bold font-handwritten text-lg">Power BI</h4></div>
+                </a>
+                 <a href="/projects/ai-ml" class="polaroid-card text-center">
+                    <img src="{{ url_for('static', filename='images/AIML.png') }}" alt="AI/ML" class="polaroid-image">
+                    <div class="polaroid-caption"><h4 class="font-bold font-handwritten text-lg">AI / ML</h4></div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- Chart.js ---
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Share Tech Mono', monospace";
+    
+    // Chart 1: Technologies Applied (Doughnut)
+    new Chart(document.getElementById('techChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Python', 'Web Scraping', 'Data Cleaning', 'Time-Series Analysis', 'Tableau/Power BI', 'SQL', 'Flask'],
+            datasets: [{
+                data: [25, 15, 15, 15, 10, 15, 5],
+                backgroundColor: ['#00ffff', '#8b5cf6', '#ec4899', '#f97316', '#38bdf8', '#10b981', '#facc15'],
+                borderColor: '#020412',
+                borderWidth: 4,
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, padding: 10 } } }
+        }
+    });
+
+    // Chart 2: Skill Progression (Line)
+    const skillCtx = document.getElementById('skillChart').getContext('2d');
+    const gradient = skillCtx.createLinearGradient(0, 0, 0, 200);
+    gradient.addColorStop(0, '#00ffff'); // Python
+    gradient.addColorStop(0.2, '#f97316'); // Web Scraping
+    gradient.addColorStop(0.4, '#8b5cf6'); // Time-Series/BI
+    gradient.addColorStop(0.6, '#10b981'); // SQL
+    gradient.addColorStop(0.8, '#facc15'); // SQL + Python
+    gradient.addColorStop(1, '#ec4899'); // Flask
+
+    new Chart(skillCtx, {
+        type: 'line',
+        data: {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+            datasets: [{
+                label: 'Skill Level',
+                data: [20, 40, 60, 75, 90, 100],
+                borderColor: gradient,
+                backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                fill: true,
+                tension: 0.4,
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { 
+                y: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.1)' } }, 
+                x: { grid: { display: false } } 
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% block title %}Blogs - Anshita Dawar{% endblock %}
+
+{% block extra_styles %}
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+    .font-handwritten { font-family: 'Caveat', cursive; }
+    .widget {
+        background: rgba(10, 20, 40, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 255, 255, 0.2);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+        transition: all 0.3s ease;
+    }
+    .widget:hover {
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        border-color: rgba(0, 255, 255, 0.4);
+    }
+    .blog-card {
+        background: rgba(17, 24, 39, 0.7);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 255, 255, 0.2);
+    }
+    .blog-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 255, 255, 0.2);
+    }
+    .blog-card img {
+        transition: transform 0.3s ease;
+    }
+    .blog-card:hover img {
+        transform: scale(1.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+
+    <div class="text-center mb-16">
+        <h1 class="text-5xl sm:text-7xl text-cyan-300 font-heading font-bold mb-4">
+            Data Transmissions
+        </h1>
+        <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+            A collection of thoughts, findings, and deep dives from my journey through the world of data analytics, machine learning, and technology. These are the signals from the hub.
+        </p>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+
+        <!-- Left Column: Blog Stats (Sticky on large screens) -->
+        <div class="lg:col-span-1 lg:sticky top-36 h-fit">
+            <div class="widget p-6 sm:p-8 space-y-8">
+                <div>
+                    <h2 class="text-3xl sm:text-4xl font-heading font-bold text-cyan-300 mb-2">Blog Dashboard</h2>
+                    <p class="text-slate-400">Visualizing my writing journey.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-8">
+                    <!-- Chart 1: Post Categories -->
+                    <div>
+                        <h3 class="font-semibold text-slate-300 mb-2 text-center">Post Categories</h3>
+                        <div class="w-full h-64">
+                            <canvas id="categoriesChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Chart 2: Engagement Metrics -->
+                    <div>
+                        <h3 class="font-semibold text-slate-300 mb-2 text-center">Engagement Metrics</h3>
+                        <div class="w-full h-64">
+                            <canvas id="engagementChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chart 3: Est. Reading Time -->
+                    <div>
+                        <h3 class="font-semibold text-slate-300 mb-2 text-center">Est. Reading Time (mins)</h3>
+                        <div class="w-full h-64">
+                            <canvas id="readingTimeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Blog Cards -->
+        <div class="lg:col-span-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                
+                <!-- Blog 1 -->
+                <a href="https://www.linkedin.com/pulse/programming-paradigms-how-when-choose-your-coding-style-anshita-dawar-zl8ve?trk=public_post_feed-article-content" target="_blank" class="block">
+                    <div class="blog-card">
+                        <div class="overflow-hidden">
+                            <img src="{{ url_for('static', filename='images/blog 1.jpg') }}" alt="Programming paradigms" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h2 class="text-2xl font-heading font-bold text-white mt-2">Programming Paradigms</h2>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Blog 2 -->
+                <a href="https://www.linkedin.com/posts/anshita-dawar_imagine-netflix-throwing-random-shows-at-activity-7350186199442964482-01Uq?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFBsJX0BbQlgsm7TuRda9BLLmPMdRvxEtrc" target="_blank" class="block">
+                    <div class="blog-card">
+                         <div class="overflow-hidden">
+                            <img src="{{ url_for('static', filename='images/blog 2.png') }}" alt="Making sense of data" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h2 class="text-2xl font-heading font-bold text-white mt-2">Data Decoded</h2>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Blog 3 -->
+                <a href="https://www.linkedin.com/posts/anshita-dawar_ever-get-confused-between-lists-tuples-activity-7350768047420284930-E53t?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFBsJX0BbQlgsm7TuRda9BLLmPMdRvxEtrc" target="_blank" class="block">
+                    <div class="blog-card">
+                         <div class="overflow-hidden">
+                            <img src="{{ url_for('static', filename='images/blog 3.png') }}" alt="Python Data Structures" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h2 class="text-2xl font-heading font-bold text-white mt-2">Python Data Structures</h2>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Blog 4 -->
+                <a href="https://www.linkedin.com/posts/anshita-dawar_ever-heard-of-web-scraping-but-not-sure-what-activity-7352686685408632832-dhCW?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFBsJX0BbQlgsm7TuRda9BLLmPMdRvxEtrc" target="_blank" class="block">
+                    <div class="blog-card">
+                         <div class="overflow-hidden">
+                            <img src="{{ url_for('static', filename='images/blog 4.png') }}" alt="Web Scraping concept" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h2 class="text-2xl font-heading font-bold text-white mt-2">What is Web Scraping?</h2>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Blog 5 -->
+                <a href="https://www.linkedin.com/posts/anshita-dawar_can-music-beats-really-boost-focus-or-is-activity-7356951463195017216-btyj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFBsJX0BbQlgsm7TuRda9BLLmPMdRvxEtrc" target="_blank" class="block">
+                    <div class="blog-card">
+                         <div class="overflow-hidden">
+                            <img src="{{ url_for('static', filename='images/blog 5.png') }}" alt="Data meets Spotify" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h2 class="text-2xl font-heading font-bold text-white mt-2"> Music vs Focus</h2>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Blog 6 -->
+                <a href="https://www.linkedin.com/pulse/ai-vs-data-team-anshita-dawar-uuagf/?trackingId=1R84YjxWThSZPpUZND1LeQ%3D%3D" target="_blank" class="block">
+                    <div class="blog-card">
+                         <div class="overflow-hidden">
+                            <img src="{{ url_for('static', filename='images/blog 6.png') }}" alt="AI vs Data team" class="w-full h-48 object-cover">
+                        </div>
+                        <div class="p-4">
+                            <h2 class="text-2xl font-heading font-bold text-white mt-2">AI vs Data Team        </h2>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- Chart.js ---
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Share Tech Mono', monospace";
+    
+    const blogData = {
+        labels: ['Blog 1', 'Blog 2', 'Blog 3', 'Blog 4', 'Blog 5', 'Blog 6'],
+        engagement: [120, 180, 150, 250, 300, 190],
+        readingTime: [5, 3, 4, 3, 6, 5],
+    };
+
+    new Chart(document.getElementById('categoriesChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Technical', 'Data Science', 'Productivity'],
+            datasets: [{
+                data: [4, 2, 1], // Updated with new blog
+                backgroundColor: ['#00ffff', '#8b5cf6', '#10b981'],
+                borderColor: '#020412',
+                borderWidth: 4,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8 } } }
+        }
+    });
+
+    new Chart(document.getElementById('engagementChart'), {
+        type: 'bar',
+        data: {
+            labels: blogData.labels,
+            datasets: [{
+                label: 'Engagement',
+                data: blogData.engagement,
+                backgroundColor: 'rgba(16, 185, 129, 0.6)',
+                borderColor: 'rgba(16, 185, 129, 1)',
+                borderWidth: 1,
+                borderRadius: 4,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true }, x: { grid: { display: false } } }
+        }
+    });
+
+    new Chart(document.getElementById('readingTimeChart'), {
+        type: 'line',
+        data: {
+            labels: blogData.labels,
+            datasets: [
+                {
+                    label: 'Reading Time (mins)',
+                    data: blogData.readingTime,
+                    borderColor: 'rgb(139, 92, 246)',
+                    backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                    fill: true,
+                    tension: 0.4,
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true }, x: { grid: { display: false } } }
+        }
+    });
+});
+</script>
+{% endblock %}

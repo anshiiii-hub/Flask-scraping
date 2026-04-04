@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+
+{% block title %}AI Interface - Anshita Dawar{% endblock %}
+
+{% block extra_styles %}
+    <style>
+        .font-handwritten { font-family: 'Caveat', cursive; }
+        
+        .holographic-frame {
+            float: right;
+            width: 220px;
+            background: rgba(10, 20, 40, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            transform: rotate(3deg);
+            transition: all 0.3s ease;
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        .holographic-frame:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3), 0 0 25px rgba(0, 255, 255, 0.3);
+            z-index: 10;
+        }
+
+        .video-container {
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .terminal-text::after {
+            content: '▋';
+            animation: blink 0.8s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+    <div class="space-y-16">
+        
+        <!-- Main Analysis Widget with Integrated Polaroid Video -->
+        <div class="widget p-8 scroll-animate">
+            <!-- Holographic Video Frame -->
+            <div class="holographic-frame">
+                <div class="video-container">
+                    <video
+                        src="{{ url_for('static', filename='Girl_s_Subtle_Smile_and_Wave.mp4') }}"
+                        autoplay loop muted playsinline>
+                    </video>
+                </div>
+                <p class="font-heading text-center text-cyan-300 mt-2 text-sm">LIVE FEED</p>
+            </div>
+
+            <!-- Main Text Content -->
+            <div>
+                <h1 class="text-2xl font-semibold text-cyan-400 mb-2">Subject Analysis: Anshita Dawar</h1>
+                <h2 class="text-5xl sm:text-6xl font-heading text-cyan-300 leading-tight mb-6">
+                    Key Insights
+                </h2>
+                <div class="space-y-6 text-lg text-slate-300">
+                   <p>
+                       Preliminary analysis suggests a personality driven by a dynamic blend of curiosity, caffeine dependency, and creative chaos. These core attributes serve as primary drivers for both professional and personal pursuits.
+                   </p>
+                   <p>
+                       The "CodroidHub" dataset (Summer 2025) indicates a deep immersion into data analytics and engineering. Key activities involved pattern recognition in unstructured datasets and developing novel engineering solutions, transforming hypothetical queries ("What if?") into functional applications ("Why not?").
+                   </p>
+                   <p>
+                       Off-duty data points correlate strongly with creative outputs (painting), culinary exploration (food discovery), and aesthetic appreciation (street art). A high value is placed on experiential learning, with anomalous outcomes ("failures") being reclassified as valuable "memory" assets.
+                   </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personal Dashboard Widget -->
+        <div class="widget p-8 scroll-animate">
+            <h3 class="font-heading text-cyan-300 text-4xl mb-6 text-center">Cognitive Metrics</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Chart 1: Sources of Curiosity -->
+                <div class="text-center">
+                    <canvas id="curiosityChart" height="250"></canvas>
+                    <h4 class="font-bold text-white mt-4">Cognitive Drivers</h4>
+                    <p class="text-slate-400 text-sm">Primary drivers for exploration.</p>
+                </div>
+
+                <!-- Chart 2: Creativity Spectrum -->
+                <div class="text-center">
+                    <canvas id="creativityChart" height="250"></canvas>
+                    <h4 class="font-bold text-white mt-4">Creativity Spectrum</h4>
+                    <p class="text-slate-400 text-sm">Distribution of creative energy.</p>
+                </div>
+
+                <!-- Chart 3: Flavor Profile -->
+                <div class="text-center">
+                    <canvas id="flavorChart" height="250"></canvas>
+                    <h4 class="font-bold text-white mt-4">Heuristic Profile</h4>
+                    <p class="text-slate-400 text-sm">Mapping problem-solving preferences.</p>
+                </div>
+
+            </div>
+        </div>
+         <!-- System Status Widget -->
+        <div class="widget p-8 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-4">System Status</h2>
+            <p id="terminal-text" class="text-lg text-green-400 terminal-text"></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- Terminal Typing Effect ---
+    const terminalElement = document.getElementById('terminal-text');
+    const lines = ["Initializing neural core...", "Calibrating analytical models...", "Compiling skill matrix...", "Status: Online and ready to analyze."];
+    let lineIndex = 0;
+    let charIndex = 0;
+
+    function type() {
+        if (lineIndex < lines.length) {
+            if (charIndex < lines[lineIndex].length) {
+                terminalElement.textContent += lines[lineIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, 50);
+            } else {
+                lineIndex++;
+                charIndex = 0;
+                setTimeout(() => {
+                    if (lineIndex < lines.length) terminalElement.textContent = '';
+                    type();
+                }, 1500);
+            }
+        } else {
+            terminalElement.classList.remove('terminal-text');
+        }
+    }
+    type();
+
+    // --- Chart.js Visualizations ---
+    Chart.defaults.color = '#94a3b8'; // slate-400
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+    Chart.defaults.font.family = "'Share Tech Mono', monospace";
+
+    new Chart(document.getElementById('curiosityChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Tech', 'Art', 'People', 'Food'],
+            datasets: [{
+                data: [90, 75, 80, 85],
+                backgroundColor: ['#00ffff', '#8b5cf6', '#ec4899', '#f97316'],
+                borderRadius: 5,
+            }]
+        },
+        options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.1)' } }, x: { grid: { display: false } } } }
+    });
+
+    new Chart(document.getElementById('creativityChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Painting', 'Problem-Solving', 'Writing'],
+            datasets: [{
+                data: [40, 35, 25],
+                backgroundColor: ['#8b5cf6', '#ec4899', '#f97316'],
+                borderColor: '#020412',
+                borderWidth: 4,
+            }]
+        },
+        options: { plugins: { legend: { position: 'bottom', labels: { padding: 15 } } } }
+    });
+
+    new Chart(document.getElementById('flavorChart'), {
+        type: 'radar',
+        data: {
+            labels: ['Spicy', 'Sweet', 'Savory', 'Sour', 'Umami'],
+            datasets: [{
+                data: [80, 60, 90, 40, 75],
+                backgroundColor: 'rgba(236, 72, 153, 0.2)',
+                borderColor: 'rgba(236, 72, 153, 1)',
+                pointBackgroundColor: 'rgba(236, 72, 153, 1)',
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: { r: { angleLines: { color: 'rgba(255, 255, 255, 0.2)' }, grid: { color: 'rgba(255, 255, 255, 0.2)' }, pointLabels: { font: { size: 12 }, color: '#e0eafc' }, ticks: { display: false, backdropColor: 'rgba(0,0,0,0)' } } }
+        }
+    });
+});
+</script>
+{% endblock %}

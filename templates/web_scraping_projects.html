@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+
+{% block title %}Web Scraping Projects - Anshita Dawar{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .widget {
+        background: rgba(10, 20, 40, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 255, 255, 0.2);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+        position: relative;
+        background-image: linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 20px 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .widget:hover {
+       border-color: rgba(0, 255, 255, 0.5);
+       box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);
+       transform: translateY(-5px);
+    }
+    
+    .scroll-animate {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .scroll-animate.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="min-h-screen">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div class="space-y-16">
+            
+            <section class="widget p-8 text-center scroll-animate">
+                <h1 class="text-5xl md:text-7xl text-cyan-300 font-heading font-bold">Data Extraction Protocols</h1>
+                <p class="text-lg text-slate-300 max-w-4xl mx-auto mt-6">
+                   In a data-saturated ecosystem, the ability to acquire, structure, and analyze information is a prime directive. Web scraping protocols are the first phase of this process—the art of converting the chaotic, unstructured web into a clean, powerful source of actionable intelligence. This module documents my capabilities in data acquisition and narrative discovery.
+                </p>
+            </section>
+
+            <section class="widget p-8 md:p-12 scroll-animate">
+               <h2 class="text-4xl font-heading text-cyan-300 mb-12 text-center">Tactical Applications</h2>
+               <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                   <div class="p-4">
+                       <svg class="w-16 h-16 mx-auto mb-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                       <h3 class="font-bold text-xl mb-2 font-heading text-white">Market Analysis</h3>
+                       <p class="text-slate-400">Track competitor telemetry, monitor product trends, and analyze market sentiment in real-time.</p>
+                   </div>
+                   <div class="p-4">
+                       <svg class="w-16 h-16 mx-auto mb-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                       <h3 class="font-bold text-xl mb-2 font-heading text-white">Target Acquisition</h3>
+                       <p class="text-slate-400">Compile lists of potential clients or contacts from public directories and professional networks.</p>
+                   </div>
+                   <div class="p-4">
+                       <svg class="w-16 h-16 mx-auto mb-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3M5.636 5.636l-1.414-1.414M18.364 18.364l-1.414-1.414M19.778 5.636l-1.414 1.414M4.222 18.364l1.414-1.414M12 12a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                       <h3 class="font-bold text-xl mb-2 font-heading text-white">ML Training Data</h3>
+                       <p class="text-slate-400">Gather vast, diverse datasets to train and validate machine learning models for any application.</p>
+                   </div>
+               </div>
+           </section>
+
+            <section class="scroll-animate space-y-12">
+               <h2 class="text-4xl font-heading text-cyan-300 text-center">Mission Logs</h2>
+               
+               <a href="/projects/web-scraping/books-to-scrape" class="widget p-6 block group relative overflow-hidden">
+                   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                       <div class="relative overflow-hidden rounded-lg"><img src="{{ url_for('static', filename='images/books.png') }}" alt="Books To Scrape" class="w-full h-auto transition-transform duration-500 group-hover:scale-105"></div>
+                       <div class="lg:col-span-2">
+                           <h3 class="font-bold text-2xl mb-4 font-heading text-white">Protocol: Book Catalog Indexing</h3>
+                           <p class="text-md text-slate-300 mb-4"><strong class="text-cyan-300">Objective:</strong> A fictional bookstore required its entire online catalog to be digitized for inventory analysis. Data was fragmented across a multi-page, paginated interface.</p>
+                           <p class="text-md text-slate-300"><strong class="text-cyan-300">Execution Analysis:</strong> Deployed a Python scraper utilizing BeautifulSoup to systematically navigate the site architecture. Extracted key data points for each entry and compiled the results into a structured CSV file for analysis.</p>
+                       </div>
+                   </div>
+                   <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                       <span class="text-2xl font-heading text-cyan-300 border-2 border-cyan-300 rounded-lg px-6 py-3">[ VIEW MISSION LOG ]</span>
+                   </div>
+               </a>
+
+               <a href="/projects/web-scraping/amazon-facewash" class="widget p-6 block group relative overflow-hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                       <div class="lg:col-span-2 text-right">
+                           <h3 class="font-bold text-2xl mb-4 font-heading text-white">Protocol: Competitive Product Analysis</h3>
+                           <p class="text-md text-slate-300 mb-4"><strong class="text-cyan-300">Objective:</strong> A skincare brand required intelligence on the competitive landscape for top-rated facewash products on the Amazon e-commerce platform.</p>
+                           <p class="text-md text-slate-300"><strong class="text-cyan-300">Execution Analysis:</strong> Developed a script using Selenium to interface with Amazon's dynamic JavaScript-rendered content. Successfully gathered product names, pricing, and user review data for market analysis.</p>
+                       </div>
+                       <div class="relative overflow-hidden rounded-lg lg:order-first"><img src="{{ url_for('static', filename='images/facewash.png') }}" alt="Amazon Facewash" class="w-full h-auto transition-transform duration-500 group-hover:scale-105"></div>
+                   </div>
+                   <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                       <span class="text-2xl font-heading text-cyan-300 border-2 border-cyan-300 rounded-lg px-6 py-3">[ VIEW MISSION LOG ]</span>
+                   </div>
+               </a>
+
+               <a href="/projects/web-scraping/flipkart-laptops" class="widget p-6 block group relative overflow-hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                       <div class="relative overflow-hidden rounded-lg"><img src="{{ url_for('static', filename='images/laptops.png') }}" alt="Flipkart Laptops" class="w-full h-auto transition-transform duration-500 group-hover:scale-105"></div>
+                       <div class="lg:col-span-2">
+                           <h3 class="font-bold text-2xl mb-4 font-heading text-white">Protocol: Tech Market Monitoring</h3>
+                           <p class="text-md text-slate-300 mb-4"><strong class="text-cyan-300">Objective:</strong> A tech retailer needed to continuously track the fast-moving laptop market on Flipkart to maintain competitive pricing models.</p>
+                           <p class="text-md text-slate-300"><strong class="text-cyan-300">Execution Analysis:</strong> Engineered a robust Scrapy spider to efficiently crawl and extract detailed laptop specifications and pricing data, feeding it into a structured database for ongoing analysis.</p>
+                       </div>
+                   </div>
+                    <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                       <span class="text-2xl font-heading text-cyan-300 border-2 border-cyan-300 rounded-lg px-6 py-3">[ VIEW MISSION LOG ]</span>
+                   </div>
+               </a>
+
+               <a href="/projects/web-scraping/goodreads-quotes" class="widget p-6 block group relative overflow-hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                       <div class="lg:col-span-2 text-right">
+                           <h3 class="font-bold text-2xl mb-4 font-heading text-white">Protocol: Content Generation Feed</h3>
+                           <p class="text-md text-slate-300 mb-4"><strong class="text-cyan-300">Objective:</strong> A content creator required a large corpus of inspirational quotes from Goodreads to serve as a data source for social media content generation.</p>
+                           <p class="text-md text-slate-300"><strong class="text-cyan-300">Execution Analysis:</strong> Deployed a scraper to navigate the quotes section of Goodreads, collecting quote text, author attribution, and associated tags for several thousand entries.</p>
+                       </div>
+                       <div class="relative overflow-hidden rounded-lg lg:order-first"><img src="{{ url_for('static', filename='images/quotes.png') }}" alt="Goodreads Quotes" class="w-full h-auto transition-transform duration-500 group-hover:scale-105"></div>
+                   </div>
+                   <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                       <span class="text-2xl font-heading text-cyan-300 border-2 border-cyan-300 rounded-lg px-6 py-3">[ VIEW MISSION LOG ]</span>
+                   </div>
+               </a>
+
+               <a href="/projects/web-scraping/top-mutual-funds" class="widget p-6 block group relative overflow-hidden">
+                   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                       <div class="relative overflow-hidden rounded-lg"><img src="{{ url_for('static', filename='images/mutual funds.png') }}" alt="Top Mutual Funds" class="w-full h-auto transition-transform duration-500 group-hover:scale-105"></div>
+                       <div class="lg:col-span-2">
+                           <h3 class="font-bold text-2xl mb-4 font-heading text-white">Protocol: Financial Market Intelligence</h3>
+                           <p class="text-md text-slate-300 mb-4"><strong class="text-cyan-300">Objective:</strong> A financial analyst required up-to-date data on top-performing mutual funds to inform investment strategies.</p>
+                           <p class="text-md text-slate-300"><strong class="text-cyan-300">Execution Analysis:</strong> Built a script to scrape a financial news website, extracting key performance indicators such as fund names, returns, and risk levels into a structured format.</p>
+                       </div>
+                   </div>
+                   <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                       <span class="text-2xl font-heading text-cyan-300 border-2 border-cyan-300 rounded-lg px-6 py-3">[ VIEW MISSION LOG ]</span>
+                   </div>
+               </a>
+
+               <a href="/projects/web-scraping/crypto-gainers" class="widget p-6 block group relative overflow-hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                       <div class="lg:col-span-2 text-right">
+                           <h3 class="font-bold text-2xl mb-4 font-heading text-white">Protocol: Real-Time Asset Tracking</h3>
+                           <p class="text-md text-slate-300 mb-4"><strong class="text-cyan-300">Objective:</strong> A crypto investor required a real-time data feed of the market's top gainers to identify emerging investment opportunities.</p>
+                           <p class="text-md text-slate-300"><strong class="text-cyan-300">Execution Analysis:</strong> Engineered a scraper to pull live data from a cryptocurrency exchange API, capturing the asset name, price, and 24-hour change for top-performing cryptocurrencies.</p>
+                       </div>
+                       <div class="relative overflow-hidden rounded-lg lg:order-first"><img src="{{ url_for('static', filename='images/crypto.png') }}" alt="Crypto Gainers" class="w-full h-auto transition-transform duration-500 group-hover:scale-105"></div>
+                   </div>
+                   <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                       <span class="text-2xl font-heading text-cyan-300 border-2 border-cyan-300 rounded-lg px-6 py-3">[ VIEW MISSION LOG ]</span>
+                   </div>
+               </a>
+
+            </section>
+
+            <section class="widget p-8 md:p-12 scroll-animate">
+               <h2 class="text-4xl font-heading text-cyan-300 mb-12 text-center">Ethical Directives</h2>
+               <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                   <div class="p-4">
+                       <svg class="w-16 h-16 mx-auto mb-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                       <h3 class="font-bold text-xl mb-2 font-heading text-white">Adhere to robots.txt</h3>
+                       <p class="text-slate-400">I always check and adhere to the website's `robots.txt` file to ensure I'm only accessing permitted areas.</p>
+                   </div>
+                   <div class="p-4">
+                       <svg class="w-16 h-16 mx-auto mb-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                       <h3 class="font-bold text-xl mb-2 font-heading text-white">Rate Limiting</h3>
+                       <p class="text-slate-400">I make requests at a reasonable rate to avoid overloading servers, ensuring websites remain available for everyone.</p>
+                   </div>
+                   <div class="p-4">
+                       <svg class="w-16 h-16 mx-auto mb-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                       <h3 class="font-bold text-xl mb-2 font-heading text-white">Privacy Compliance</h3>
+                       <p class="text-slate-400">My focus is on collecting public, non-sensitive information, always respecting user privacy and data protection principles.</p>
+                   </div>
+               </div>
+           </section>
+
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- Scroll-triggered Fade-in Animation ---
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+            }
+        });
+    }, { rootMargin: '0px', threshold: 0.2 });
+
+    document.querySelectorAll('.scroll-animate').forEach(section => {
+        observer.observe(section);
+    });
+
+    // --- Audio Feedback for Widgets ---
+    const widgets = document.querySelectorAll('.widget');
+    const cardSynth = new Tone.FMSynth({
+       harmonicity: 3,
+       modulationIndex: 10,
+       envelope: { attack: 0.01, decay: 0.2, release: 0.5 }
+    }).toDestination();
+    
+    let canPlaySound = true;
+
+    widgets.forEach(card => {
+       card.addEventListener('mouseenter', () => {
+           if (canPlaySound) {
+               canPlaySound = false;
+               cardSynth.triggerAttackRelease("G4", "16n");
+               setTimeout(() => {
+                   canPlaySound = true;
+               }, 100); 
+           }
+       });
+    });
+});
+</script>
+{% endblock %}

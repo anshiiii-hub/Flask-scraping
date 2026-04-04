@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+
+{% block title %}Goodreads Quotes - Data Showcase{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .widget {
+        background: rgba(10, 20, 40, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 255, 255, 0.2);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+        position: relative;
+        background-image: linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 20px 20px;
+    }
+    .asset-button {
+       display: inline-flex;
+       align-items: center;
+       gap: 0.5rem;
+       padding: 0.75rem 1.5rem;
+       background-color: rgba(0, 255, 255, 0.1);
+       border: 1px solid rgba(0, 255, 255, 0.3);
+       border-radius: 8px;
+       color: #e0eafc;
+       font-weight: bold;
+       transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    .asset-button:hover {
+       background-color: rgba(0, 255, 255, 0.2);
+       box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+    <div class="space-y-16">
+        
+        <section class="widget p-8 text-center scroll-animate">
+            <h1 class="text-5xl md:text-7xl text-cyan-300 font-heading font-bold">Mission: Goodreads Quotes</h1>
+            <p class="text-lg text-slate-300 max-w-2xl mx-auto mt-4">Scraping thousands of quotes and authors from Goodreads to inspire content creation and analyze popular themes in literature.</p>
+        </section>
+
+        <section class="widget p-8 md:p-12 text-center scroll-animate">
+            <h2 class="font-heading text-cyan-300 text-4xl mb-4">Mission Objective</h2>
+            <p class="text-lg text-slate-300 max-w-4xl mx-auto">A content creator needed a large collection of quotes and author data from Goodreads for inspiration and social media content. The objective was to automate the extraction of quotes and authors for analysis and creative use.</p>
+        </section>
+        
+        <section class="scroll-animate">
+           <div class="widget p-8 md:p-12 text-center mb-16">
+               <h2 class="font-heading text-cyan-300 text-4xl mb-4">Data Source & Reconnaissance</h2>
+               <p class="text-lg text-slate-300 max-w-4xl mx-auto mb-4">Data scraped from <a href="https://www.goodreads.com/quotes" target="_blank" class="text-cyan-300 hover:underline">Goodreads Quotes</a>, a vast repository of literary and philosophical quotes.</p>
+               <a href="https://www.goodreads.com/quotes" target="_blank" class="inline-block px-4 py-2 bg-cyan-900/50 text-cyan-300 font-bold rounded-lg hover:bg-cyan-800/50 transition-colors border border-cyan-500/50">Access Data Source →</a>
+           </div>
+           <div class="bg-black/50 p-2 rounded-lg border border-cyan-500/30 shadow-2xl shadow-cyan-500/20">
+               <video class="w-full rounded" autoplay loop muted playsinline>
+                   <source src="{{ url_for('static', filename='video/training-background.mp4') }}" type="video/mp4">
+                   Your browser does not support the video tag.
+               </video>
+           </div>
+           <div class="mt-8 text-center">
+                <h3 class="font-heading text-xl text-cyan-400 mb-4">Analysis Report</h3>
+                <div class="flex flex-wrap items-center justify-center gap-6">
+                   <a href="{{ url_for('view_pdf', filename='goodreads.pdf') }}" target="_blank" class="asset-button">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                       <span>View IPYNB as PDF</span>
+                   </a>
+                   <a href="{{ url_for('download_pdf', filename='goodreads.pdf') }}" download class="asset-button">
+                       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                       <span>Download IPYNB as PDF</span>
+                   </a>
+               </div>
+            </div>
+        </section>
+
+        <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="font-heading text-cyan-300 text-4xl mb-8 text-center">Execution Protocol</h2>
+            <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
+                <div class="text-center"><div class="bg-cyan-900/50 p-4 rounded-full border border-cyan-500/50 inline-block"><svg class="w-12 h-12 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 18a9 9 0 009-9m-9 9a9 9 0 00-9-9"></path></svg></div><p class="mt-2 font-bold">1. Request</p></div>
+                <div class="text-cyan-400/50 text-2xl font-bold hidden md:block">→</div>
+                <div class="text-center"><div class="bg-cyan-900/50 p-4 rounded-full border border-cyan-500/50 inline-block"><svg class="w-12 h-12 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg></div><p class="mt-2 font-bold">2. Parse</p></div>
+                <div class="text-cyan-400/50 text-2xl font-bold hidden md:block">→</div>
+                <div class="text-center"><div class="bg-cyan-900/50 p-4 rounded-full border border-cyan-500/50 inline-block"><svg class="w-12 h-12 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></div><p class="mt-2 font-bold">3. Extract</p></div>
+                <div class="text-cyan-400/50 text-2xl font-bold hidden md:block">→</div>
+                <div class="text-center"><div class="bg-cyan-900/50 p-4 rounded-full border border-cyan-500/50 inline-block"><svg class="w-12 h-12 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div><p class="mt-2 font-bold">4. Store</p></div>
+            </div>
+            <div class="text-center mt-8 border-t border-cyan-500/30 pt-6">
+                <h3 class="font-heading text-xl text-cyan-400 mb-4">Source Code Repository</h3>
+                <a href="https://github.com/Anshita-Dawar/codroidhub-portfolio/blob/main/Web%20Scraping/4.%20Goodreads%20Quotes%20Scraping/Goodreads%20Quotes%20Scraping.ipynb" target="_blank" class="asset-button">
+                   <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.65.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></path></svg>
+                   <span>View on GitHub</span>
+               </a>
+            </div>
+        </section>
+        
+        <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="font-heading text-cyan-300 text-4xl mb-4 text-center">Extracted Data Log</h2>
+            <div class="overflow-x-auto mt-6 border border-cyan-500/30 rounded-lg">
+                <table class="min-w-full text-left text-sm">
+                    <thead class="bg-cyan-900/30"><tr><th class="p-3 font-bold">Quote</th><th class="p-3 font-bold">Author</th></tr></thead>
+                    <tbody class="text-slate-300">
+                        {% for item in data %}
+                        <tr class="border-t border-cyan-500/20">
+                            <td class="p-3">{{ item.quote }}</td>
+                            <td class="p-3">{{ item.author }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+             <div class="text-center mt-6 flex flex-wrap items-center justify-center gap-6">
+               <a href="{{ url_for('download_file', filename='goodreads-quotes.csv') }}" target="_blank" class="asset-button">
+                   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                   <span>View Full CSV</span>
+               </a>
+               <a href="{{ url_for('download_file', filename='goodreads-quotes.csv') }}" download class="asset-button">
+                   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                   <span>Download CSV</span>
+               </a>
+           </div>
+        </section>
+
+        <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="font-heading text-cyan-300 text-4xl mb-8 text-center">Data Analysis & Intelligence Report</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-5"><canvas id="bar-chart"></canvas></div>
+            </div>
+            <div class="mt-8 border-t border-cyan-500/30 pt-6">
+                <h3 class="font-heading text-2xl text-cyan-300 mb-3">Key Insights:</h3>
+                <ul class="list-disc list-inside text-lg text-slate-300 space-y-2">
+                    <li><strong class="text-cyan-400">Popular Authors:</strong> Certain authors dominate the quote collections, indicating their enduring influence on readers.</li>
+                    <li><strong class="text-cyan-400">Content Themes:</strong> Quotes span various themes from motivation to philosophy, providing rich content for different audiences.</li>
+                    <li><strong class="text-cyan-400">Strategic Opportunity:</strong> Categorizing quotes by sentiment and theme could enhance content curation and audience targeting.</li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+   const startAudio = async () => {
+       await Tone.start();
+       document.documentElement.removeEventListener('mousedown', startAudio);
+   };
+   document.documentElement.addEventListener('mousedown', startAudio);
+
+    const widgets = document.querySelectorAll('.widget');
+    const cardSynth = new Tone.FMSynth({ harmonicity: 3, modulationIndex: 10, envelope: { attack: 0.01, decay: 0.2, release: 0.5 } }).toDestination();
+    let canPlaySound = true;
+    widgets.forEach(card => {
+       card.addEventListener('mouseenter', () => {
+           if (canPlaySound) {
+               canPlaySound = false;
+               cardSynth.triggerAttackRelease("G4", "16n");
+               setTimeout(() => { canPlaySound = true; }, 100); 
+           }
+       });
+    });
+
+    // --- Chart.js ---
+   const fontColor = '#e0eafc';
+   const gridColor = 'rgba(0, 255, 255, 0.2)';
+   const fontFamily = "'Share Tech Mono', monospace";
+
+   const quotesData = {{ data|tojson }};
+   const authorCounts = quotesData.reduce((acc, item) => {
+       acc[item.author] = (acc[item.author] || 0) + 1;
+       return acc;
+   }, {});
+
+   const sortedAuthors = Object.entries(authorCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+   const authorLabels = sortedAuthors.map(item => item[0]);
+   const authorData = sortedAuthors.map(item => item[1]);
+
+   // Bar Chart
+   const barCtx = document.getElementById('bar-chart').getContext('2d');
+   new Chart(barCtx, {
+       type: 'bar',
+       data: {
+           labels: authorLabels,
+           datasets: [{
+               label: 'Number of Quotes',
+               data: authorData,
+               backgroundColor: 'rgba(0, 255, 255, 0.5)',
+               borderColor: 'rgba(0, 255, 255, 1)',
+               borderWidth: 1
+           }]
+       },
+       options: {
+           responsive: true,
+           plugins: {
+               legend: { display: false },
+               title: { display: true, text: 'Top 10 Most Quoted Authors', color: fontColor, font: { size: 18, family: fontFamily } }
+           },
+           scales: {
+               y: {
+                   beginAtZero: true,
+                   grid: { color: gridColor },
+                   ticks: { color: fontColor, font: { family: fontFamily } }
+               },
+               x: {
+                   grid: { color: gridColor },
+                   ticks: { color: fontColor, font: { family: fontFamily } }
+               }
+           }
+       }
+   });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,403 @@
+{% extends "base.html" %}
+
+{% block title %}My Learning Journey - Anshita Dawar{% endblock %}
+
+{% block head %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        .font-heading { font-family: 'Orbitron', sans-serif; }
+        .font-body { font-family: 'Share Tech Mono', monospace; }
+        
+        body {
+            background-color: #020412;
+            color: #e0eafc;
+            overflow-x: hidden;
+        }
+
+        #neural-network-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .widget {
+            background: rgba(10, 20, 40, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            background-image: linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .widget:hover {
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+            border-color: rgba(0, 255, 255, 0.4);
+        }
+        
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Timeline Styles */
+        .timeline-container {
+            position: relative;
+            padding: 2rem 0;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: rgba(0, 255, 255, 0.1);
+        }
+        .timeline-progress {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 0; /* Animated with JS */
+            background: #00ffff;
+            box-shadow: 0 0 10px #00ffff;
+            transition: height 0.2s linear;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            width: 100%;
+        }
+        .timeline-content {
+             width: 45%;
+        }
+        .timeline-item:nth-child(odd) {
+            padding-right: 55%;
+        }
+        .timeline-item:nth-child(even) {
+            padding-left: 55%;
+        }
+
+        .timeline-node {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 44px;
+            height: 44px;
+            background-color: #020412;
+            border: 4px solid #00ffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #00ffff;
+            box-shadow: 0 0 15px #00ffff;
+            animation: pulse 2s infinite;
+            z-index: 10;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 15px #00ffff; }
+            50% { box-shadow: 0 0 25px #00ffff; }
+            100% { box-shadow: 0 0 15px #00ffff; }
+        }
+        .project-highlight {
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            background: rgba(0, 255, 255, 0.05);
+        }
+        
+        .showcase-button {
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .showcase-button:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 255, 255, 0.15);
+            border-color: rgba(0, 255, 255, 0.5);
+        }
+        .showcase-button .launch-text {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        .showcase-button:hover .launch-text {
+            opacity: 1;
+        }
+
+        .skill-tag {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            color: #00ffff;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <canvas id="neural-network-canvas"></canvas>
+    <main class="min-h-screen">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+            
+            <section class="text-center pt-16 mb-24 scroll-animate">
+                <h1 class="text-5xl md:text-7xl text-cyan-300 font-heading font-bold mb-4">
+                   My Learning Journey
+                </h1>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto">
+                    A six-week deep dive into Data Analytics & Engineering at CodroidHub, chronicling my skill progression from foundational concepts to full-stack deployment.
+                </p>
+            </section>
+
+            <div class="timeline-container">
+                <div class="timeline-line"><div class="timeline-progress"></div></div>
+                
+                <!-- Week 1 -->
+                <div class="timeline-item scroll-animate">
+                    <div class="timeline-node">W1</div>
+                    <div class="timeline-content widget p-8">
+                        <h2 class="text-3xl font-heading text-white mb-3 text-center md:text-left"><span class="text-cyan-400">Week 1:</span> Python & Foundations</h2>
+                        <p class="text-slate-300 mb-6">The journey began by architecting a solid foundation in Python, mastering programming logic, data structures, and the high-performance libraries—NumPy and Pandas—that form the bedrock of any serious data analysis.</p>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-bold text-cyan-300 mb-2">Core Competencies Unlocked:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">Core Python</span>
+                                    <span class="skill-tag">NumPy</span>
+                                    <span class="skill-tag">Pandas</span>
+                                </div>
+                            </div>
+                            <div class="project-highlight p-4 rounded-md mt-4">
+                                <h4 class="font-bold text-cyan-300">Key Project:</h4>
+                                <p class="text-slate-300 text-sm">Developed a script to analyze a sales dataset, performing data cleaning, aggregation, and calculating key metrics with Pandas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 2 -->
+                <div class="timeline-item scroll-animate">
+                    <div class="timeline-node">W2</div>
+                     <div class="timeline-content ml-auto widget p-8">
+                        <h2 class="text-3xl font-heading text-white mb-3 text-center md:text-left"><span class="text-cyan-400">Week 2:</span> Web Scraping & Data Acquisition</h2>
+                        <p class="text-slate-300 mb-6">This week focused on transforming the web into a limitless data source. I engineered robust scrapers using BeautifulSoup and Selenium, mastering techniques to automatically gather, parse, and structure information from diverse websites.</p>
+                        <div class="space-y-4">
+                             <div>
+                                <h4 class="font-bold text-cyan-300 mb-2">Core Competencies Unlocked:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">BeautifulSoup</span>
+                                    <span class="skill-tag">Selenium</span>
+                                    <span class="skill-tag">Data Cleaning</span>
+                                </div>
+                            </div>
+                             <div class="project-highlight p-4 rounded-md mt-4">
+                                <h4 class="font-bold text-cyan-300">Key Project:</h4>
+                                <p class="text-slate-300 text-sm">Built a scraper for `books.toscrape.com`, successfully extracting and structuring data for over 1,000 book entries into a clean CSV file.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 3 -->
+                <div class="timeline-item scroll-animate">
+                    <div class="timeline-node">W3</div>
+                    <div class="timeline-content widget p-8">
+                        <h2 class="text-3xl font-heading text-white mb-3 text-center md:text-left"><span class="text-cyan-400">Week 3:</span> Data Analysis & Visualization</h2>
+                        <p class="text-slate-300 mb-6">With a strong pipeline for data acquisition, this week was dedicated to turning raw data into compelling stories. I dove into time-series analysis and mastered industry-standard tools like Tableau and Power BI to build interactive, insightful dashboards.</p>
+                        <div class="space-y-4">
+                             <div>
+                                <h4 class="font-bold text-cyan-300 mb-2">Core Competencies Unlocked:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">Time-Series Analysis</span>
+                                    <span class="skill-tag">Power BI</span>
+                                    <span class="skill-tag">Tableau</span>
+                                </div>
+                            </div>
+                            <div class="project-highlight p-4 rounded-md mt-4">
+                                <h4 class="font-bold text-cyan-300">Key Project:</h4>
+                                <p class="text-slate-300 text-sm">Created an interactive Power BI dashboard to visualize findings from the "Books to Scrape" dataset, showcasing price distributions and availability trends.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 4 -->
+                <div class="timeline-item scroll-animate">
+                    <div class="timeline-node">W4</div>
+                     <div class="timeline-content ml-auto widget p-8">
+                        <h2 class="text-3xl font-heading text-white mb-3 text-center md:text-left"><span class="text-cyan-400">Week 4:</span> SQL Fundamentals</h2>
+                        <p class="text-slate-300 mb-6">This week was a deep dive into mastering SQL, the universal language of data. I learned to architect and query complex relational databases, performing powerful joins and aggregations to efficiently extract precise information for large-scale analysis.</p>
+                        <div class="space-y-4">
+                             <div>
+                                <h4 class="font-bold text-cyan-300 mb-2">Core Competencies Unlocked:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">Advanced SQL</span>
+                                    <span class="skill-tag">Database Design</span>
+                                    <span class="skill-tag">Query Optimization</span>
+                                </div>
+                            </div>
+                            <div class="project-highlight p-4 rounded-md mt-4">
+                                <h4 class="font-bold text-cyan-300">Key Project:</h4>
+                                <p class="text-slate-300 text-sm">Designed a relational schema and populated a database with scraped data, then executed complex queries to aggregate sales data by category.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Week 5 -->
+                <div class="timeline-item scroll-animate">
+                    <div class="timeline-node">W5</div>
+                    <div class="timeline-content widget p-8">
+                        <h2 class="text-3xl font-heading text-white mb-3 text-center md:text-left"><span class="text-cyan-400">Week 5:</span> SQL & Python Integration</h2>
+                        <p class="text-slate-300 mb-6">Bridging the gap between application logic and data storage. This week focused on architecting end-to-end solutions where Python scripts and SQL databases communicate seamlessly, enabling dynamic, data-driven applications.</p>
+                        <div class="space-y-4">
+                             <div>
+                                <h4 class="font-bold text-cyan-300 mb-2">Core Competencies Unlocked:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">Database APIs</span>
+                                    <span class="skill-tag">Pandas Integration</span>
+                                    <span class="skill-tag">Automation</span>
+                                </div>
+                            </div>
+                            <div class="project-highlight p-4 rounded-md mt-4">
+                                <h4 class="font-bold text-cyan-300">Key Project:</h4>
+                                <p class="text-slate-300 text-sm">Developed a Python application that connected to a SQL database, executed queries dynamically, and exposed the results through a simple API endpoint.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 6 -->
+                <div class="timeline-item scroll-animate">
+                    <div class="timeline-node">W6</div>
+                    <div class="timeline-content ml-auto widget p-8">
+                       <h2 class="text-3xl font-heading text-white mb-3 text-center md:text-left"><span class="text-cyan-400">Week 6:</span> Deployment with Flask</h2>
+                        <p class="text-slate-300 mb-6">The final week brought all the preceding skills to a culmination. I mastered the Flask framework to build and deploy full-stack web applications, learning to turn complex data analyses into interactive, production-ready projects.</p>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-bold text-cyan-300 mb-2">Core Competencies Unlocked:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="skill-tag">Flask</span>
+                                    <span class="skill-tag">Jinja2</span>
+                                    <span class="skill-tag">Full-Stack Development</span>
+                                </div>
+                            </div>
+                            <div class="project-highlight p-4 rounded-md mt-4">
+                                <h4 class="font-bold text-cyan-300">Key Project:</h4>
+                                <p class="text-slate-300 text-sm">Built and deployed a complete Flask web application that visualized the IPL data analysis, complete with dynamic charts and a downloadable CSV report.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Journey's End -->
+                <div class="timeline-item scroll-animate">
+                     <div class="timeline-node flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    </div>
+                    <div class="w-full widget p-8">
+                        <h2 class="text-3xl font-heading text-white mb-3 text-center">Transformation: From Theory to Application</h2>
+                        <p class="text-slate-300 mb-6 text-center max-w-3xl mx-auto">Over six weeks, this intensive training transformed foundational knowledge into a versatile, professional skillset. I am now equipped with the end-to-end capabilities to tackle complex data challenges—from initial data acquisition and engineering to sophisticated analysis, visualization, and full-stack deployment.</p>
+                        
+                        <h3 class="font-bold text-2xl text-cyan-300 mb-6 text-center">Final Project Showcase:</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <a href="/projects/web-scraping" class="showcase-button">
+                                <svg class="w-10 h-10 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.25 9.75l1.75 3.5 3.5-3.5-1.75-3.5-3.5 3.5zM15.75 9.75l1.75 3.5 3.5-3.5-1.75-3.5-3.5 3.5z"></path></svg>
+                                <div><h4 class="font-bold text-white text-lg">Web Scraping</h4><span class="launch-text text-cyan-400">Launch Directive &rarr;</span></div>
+                            </a>
+                             <a href="/projects/data-science" class="showcase-button">
+                                <svg class="w-10 h-10 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3M5.636 5.636l-1.414-1.414M18.364 18.364l-1.414-1.414M19.778 5.636l-1.414 1.414M4.222 18.364l1.414-1.414M12 12a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                <div><h4 class="font-bold text-white text-lg">Data Science</h4><span class="launch-text text-cyan-400">Launch Directive &rarr;</span></div>
+                            </a>
+                             <a href="/projects/power-bi" class="showcase-button">
+                                <svg class="w-10 h-10 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+                                <div><h4 class="font-bold text-white text-lg">Power BI</h4><span class="launch-text text-cyan-400">Launch Directive &rarr;</span></div>
+                            </a>
+                             <a href="/projects/aiml" class="showcase-button">
+                                <svg class="w-10 h-10 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25z" /></svg>
+                                <div><h4 class="font-bold text-white text-lg">AI / ML</h4><span class="launch-text text-cyan-400">Launch Directive &rarr;</span></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const container = document.getElementById('neural-network-canvas');
+        if (container) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: container, alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.position.z = 5;
+
+            // ... (Full Three.js code for the background would be here)
+
+            let mouseX = 0, mouseY = 0;
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                if (scene && scene.rotation) {
+                    scene.rotation.y = mouseX * 0.1;
+                    scene.rotation.x = mouseY * 0.1;
+                }
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { rootMargin: '0px', threshold: 0.1 });
+
+        document.querySelectorAll('.scroll-animate').forEach(section => observer.observe(section));
+
+        // Animate timeline progress
+        const timelineProgress = document.querySelector('.timeline-progress');
+        const timelineContainer = document.querySelector('.timeline-container');
+        window.addEventListener('scroll', () => {
+            if(!timelineContainer || !timelineProgress) return;
+            const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollTop = window.scrollY;
+            const containerTop = timelineContainer.offsetTop;
+            const containerHeight = timelineContainer.offsetHeight;
+
+            let progress = 0;
+            if (scrollTop > containerTop) {
+                progress = Math.min(((scrollTop - containerTop) / (containerHeight - window.innerHeight * 0.8)) * 100, 100);
+            }
+            
+            timelineProgress.style.height = `${progress}%`;
+        });
+    });
+    </script>
+{% endblock %}
+

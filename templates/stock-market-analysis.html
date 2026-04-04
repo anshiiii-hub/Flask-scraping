@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block title %}Stock Market Volatility Analysis - Anshita Dawar{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .widget {
+        background: rgba(10, 20, 40, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 255, 255, 0.2);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+    <div class="space-y-16">
+        
+        <!-- 1. Header Section -->
+        <section class="text-center pt-16 scroll-animate">
+            <div class="w-64 mx-auto mb-8 p-1 border border-cyan-500/30 rounded-lg bg-black/20">
+                <img src="{{ url_for('static', filename='images/stock-market.jpg') }}" alt="Stock Analysis Thumbnail" class="w-full h-auto rounded-md">
+            </div>
+            <h1 class="text-5xl md:text-7xl text-cyan-300 font-heading font-bold mb-4">
+                {{ project_title }}
+            </h1>
+            <p class="text-lg text-slate-300 max-w-3xl mx-auto">
+                {{ description }}
+            </p>
+        </section>
+
+        <!-- 2. Problem Statement & Objective -->
+        <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-6 text-center">Problem Statement & Objective</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-lg">
+                <div>
+                    <h3 class="font-bold text-2xl mb-2 text-cyan-400">The Challenge</h3>
+                    <p class="text-slate-300">Financial markets are inherently volatile. Investors and analysts require a clear, data-driven methodology to assess a stock&apos;s historical risk and performance patterns beyond just its current price, enabling more informed strategic decisions.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-2xl mb-2 text-cyan-400">The Objective</h3>
+                    <p class="text-slate-300">To analyze the historical stock data of a major company by calculating and visualizing key financial metrics. The goal is to identify trends in moving averages, quantify daily return volatility, and present these findings in an accessible analytical report.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 3. Data Source -->
+        <section class="widget p-8 md:p-12 scroll-animate">
+             <h2 class="text-4xl font-heading text-cyan-300 mb-6 text-center">Data Source</h2>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                 <div class="text-lg text-slate-300">
+                     <p class="mb-4">The dataset for this analysis is sourced programmatically in real-time using the <code class="bg-cyan-900/50 text-cyan-300 px-2 py-1 rounded">yfinance</code> Python library, which connects directly to the Yahoo Finance API. The primary data points include:</p>
+                     <ul class="list-disc list-inside space-y-2">
+                         <li><span class="font-bold text-white">OHLC Prices:</span> Open, High, Low, and Close prices for each trading day.</li>
+                         <li><span class="font-bold text-white">Volume:</span> The total number of shares traded per day.</li>
+                     </ul>
+                     <p class="mt-4">This method ensures the analysis is performed on up-to-date, accurate financial data.</p>
+                 </div>
+             </div>
+        </section>
+        
+        <!-- 4. Methodology Diagram -->
+        <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-8 text-center">Methodology</h2>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 text-center">
+                <div class="p-4 rounded-lg bg-cyan-900/50 border border-cyan-500/30"><strong>Data Retrieval (API)</strong></div>
+                <div class="text-cyan-500 font-bold text-2xl">&rarr;</div>
+                <div class="p-4 rounded-lg bg-cyan-900/50 border border-cyan-500/30"><strong>Feature Engineering</strong></div>
+                <div class="text-cyan-500 font-bold text-2xl">&rarr;</div>
+                <div class="p-4 rounded-lg bg-cyan-900/50 border border-cyan-500/30"><strong>Time-Series Analysis</strong></div>
+                <div class="text-cyan-500 font-bold text-2xl">&rarr;</div>
+                <div class="p-4 rounded-lg bg-cyan-900/50 border border-cyan-500/30"><strong>Visualization</strong></div>
+            </div>
+        </section>
+
+        <!-- 5. CSV Preview & Download -->
+        <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-6 text-center">Data Preview</h2>
+            <div class="overflow-x-auto border border-cyan-500/20 rounded-md">
+                <table class="min-w-full w-full text-left text-base">
+                    <thead class="bg-cyan-900/50">
+                        <tr>
+                            {% for header in headers %}
+                            <th class="p-3 font-bold text-cyan-300">{{ header }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-300">
+                        {% for row in data %}
+                        <tr class="border-b border-cyan-500/20">
+                            {% for key in headers %}
+                            <td class="p-3">{{ row[key] }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center mt-6">
+                <button onclick="downloadCSV()" class="px-6 py-2 bg-cyan-500 text-black font-bold rounded-lg hover:bg-cyan-400 transition-colors">
+                    Download Full CSV
+                </button>
+            </div>
+        </section>
+        
+        <!-- 6. Visualizations & Insights -->
+        <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-8 text-center">Visualizations & Insights</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="w-full h-96">
+                    <canvas id="chart-line"></canvas>
+                </div>
+                <div class="w-full h-96">
+                    <canvas id="chart-bar"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Outcome & Applications -->
+         <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-6 text-center">Outcome & Applications</h2>
+            <p class="text-lg text-center max-w-4xl mx-auto text-slate-300">
+                The final outcome is an analytical dashboard providing a clear, quantitative view of the stock&apos;s historical performance and risk profile. The visualizations of moving averages and volatility serve as powerful tools for technical analysis. These insights can directly inform investment strategies, aid in risk assessment for portfolio management, and provide a foundation for more complex quantitative modeling.
+            </p>
+        </section>
+
+        <!-- 8. Reflection & Future Scope -->
+        <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-6 text-center">Reflection & Future Scope</h2>
+            <div class="text-lg space-y-4 text-slate-300">
+                <p>This project was a valuable exercise in applying data science techniques to financial time-series data. The primary challenge involved feature engineering to calculate meaningful metrics like daily returns and rolling volatility. It highlighted the importance of clear visualization in making complex financial data understandable and actionable.</p>
+                <p><strong class="text-cyan-400">Future Scope:</strong> The analysis can be extended by building predictive models (such as ARIMA or LSTM) to forecast future stock prices. Another valuable extension would be to develop and backtest a trading strategy based on the moving average crossover signals identified in this analysis.</p>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">
+(function() {
+    // Dynamic data from backend
+    var headers = {{ headers | tojson | safe }};
+    var allData = {{ data | tojson | safe }};
+    var lineChartData = {{ line_chart_data | tojson | safe }};
+    var barChartData = {{ bar_chart_data | tojson | safe }};
+
+    // CSV Download Functionality
+    window.downloadCSV = function() {
+        var csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\n";
+        if (allData && allData.length > 0) {
+            csvContent += allData.map(function(row) {
+                return headers.map(function(header) {
+                    return row[header] || "";
+                }).join(",");
+            }).join("\n");
+        }
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "stock_data_export.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    // Chart.js Initialization
+    Chart.defaults.font.family = "'Share Tech Mono', monospace";
+    Chart.defaults.color = '#cbd5e1';
+
+    // Line Chart
+    const lineCtx = document.getElementById('chart-line').getContext('2d');
+    new Chart(lineCtx, {
+        type: 'line',
+        data: lineChartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Stock Close Prices Over Time', font: { family: "'Orbitron', sans-serif", size: 24 }, color: '#e0eafc', padding: { bottom: 20 } },
+                legend: { position: 'top', labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(0, 255, 255, 0.1)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(0, 255, 255, 0.1)' } }
+            }
+        }
+    });
+
+    // Bar Chart
+    const barCtx = document.getElementById('chart-bar').getContext('2d');
+    new Chart(barCtx, {
+        type: 'bar',
+        data: barChartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: { display: true, text: 'Daily Percentage Returns', font: { family: "'Orbitron', sans-serif", size: 24 }, color: '#e0eafc', padding: { bottom: 20 } },
+                legend: { position: 'top', labels: { color: '#94a3b8' } }
+            },
+            scales: {
+                y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(0, 255, 255, 0.1)' } },
+                x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(0, 255, 255, 0.1)' } }
+            }
+        }
+    });
+
+    // Execute when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCharts);
+    } else {
+        initCharts();
+    }
+    
+    function initCharts() {
+        // Charts will be initialized here if needed
+    }
+})();
+</script>
+{% endblock %}

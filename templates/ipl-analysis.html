@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block title %}IPL Performance Analysis - Anshita Dawar{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .widget {
+        background: rgba(10, 20, 40, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 255, 255, 0.2);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+    <div class="space-y-16">
+        
+        <!-- 1. Header Section -->
+        <section class="text-center pt-16 scroll-animate">
+            <div class="w-64 mx-auto mb-8 p-1 border border-cyan-500/30 rounded-lg bg-black/20">
+                 <img src="{{ url_for('static', filename='images/ipl.png') }}" alt="IPL Analysis Thumbnail" class="w-full h-auto rounded-md">
+            </div>
+            <h1 class="text-5xl md:text-7xl text-cyan-300 font-heading font-bold mb-4">
+                {{ project_title }}
+            </h1>
+            <p class="text-lg text-slate-300 max-w-3xl mx-auto">
+                {{ description }}
+            </p>
+        </section>
+
+        <!-- 2. Problem Statement & Objective -->
+        <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-6 text-center">Problem Statement & Objective</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-lg">
+                <div>
+                    <h3 class="font-bold text-2xl mb-2 text-cyan-400">The Challenge</h3>
+                    <p class="text-slate-300">The Indian Premier League (IPL) is a treasure trove of data, yet many popular beliefs about team strategies and player impact remain anecdotal. The core challenge is to move beyond speculation and use rigorous data analysis to answer key strategic questions that could influence team decisions.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-2xl mb-2 text-cyan-400">The Objective</h3>
+                    <p class="text-slate-300">This project aims to perform a comprehensive exploratory data analysis on a historical IPL dataset. The primary goal is to derive actionable insights by investigating patterns related to match outcomes, player statistics, and venue characteristics, and to present these findings through clear and compelling visualizations.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 3. Data Source -->
+        <section class="widget p-8 md:p-12 scroll-animate">
+             <h2 class="text-4xl font-heading text-cyan-300 mb-6 text-center">Data Source</h2>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                 <div class="text-lg text-slate-300">
+                     <p class="mb-4">The dataset used for this analysis is a comprehensive collection of ball-by-ball IPL data from 2008 to 2020, sourced from Kaggle. It contains two main files:</p>
+                     <ul class="list-disc list-inside space-y-2">
+                         <li><span class="font-bold text-white">matches.csv:</span> Provides match-level information, including teams, venues, toss decisions, and winners.</li>
+                         <li><span class="font-bold text-white">deliveries.csv:</span> Contains ball-by-ball details, such as batsman, bowler, runs scored, and wickets taken.</li>
+                     </ul>
+                     <p class="mt-4">This rich dataset provides the foundation for a thorough and multifaceted analysis.</p>
+                 </div>
+             </div>
+        </section>
+        
+        <!-- 4. Methodology Diagram -->
+        <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-8 text-center">Methodology</h2>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 text-center">
+                <div class="p-4 rounded-lg bg-cyan-900/50 border border-cyan-500/30"><strong>Data Collection</strong></div>
+                <div class="text-cyan-500 font-bold text-2xl">&rarr;</div>
+                <div class="p-4 rounded-lg bg-cyan-900/50 border border-cyan-500/30"><strong>Data Preprocessing</strong></div>
+                <div class="text-cyan-500 font-bold text-2xl">&rarr;</div>
+                <div class="p-4 rounded-lg bg-cyan-900/50 border border-cyan-500/30"><strong>EDA</strong></div>
+                <div class="text-cyan-500 font-bold text-2xl">&rarr;</div>
+                <div class="p-4 rounded-lg bg-cyan-900/50 border border-cyan-500/30"><strong>Visualization</strong></div>
+            </div>
+        </section>
+
+        <!-- 5. CSV Preview & Download -->
+        <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-6 text-center">Data Preview</h2>
+            <div class="overflow-x-auto border border-cyan-500/20 rounded-md">
+                <table class="min-w-full w-full text-left text-base">
+                    <thead class="bg-cyan-900/50">
+                        <tr>
+                            {% for header in headers %}
+                            <th class="p-3 font-bold text-cyan-300">{{ header }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-300">
+                        {% for row in data[:5] %}
+                        <tr class="border-b border-cyan-500/20">
+                            {% for cell in row %}
+                            <td class="p-3">{{ cell }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center mt-6">
+                <a href="{{ url_for('download_file', filename='IPL/matches.csv') }}" class="px-6 py-2 bg-cyan-500 text-black font-bold rounded-lg hover:bg-cyan-400 transition-colors">
+                    Download Matches CSV
+                </a>
+                 <a href="{{ url_for('download_file', filename='IPL/deliveries.csv') }}" class="px-6 py-2 bg-cyan-500 text-black font-bold rounded-lg hover:bg-cyan-400 transition-colors">
+                    Download Deliveries CSV
+                </a>
+            </div>
+        </section>
+        
+        <!-- 6. Visualizations & Insights -->
+        <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-8 text-center">Visualizations & Insights</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                {% for chart in charts_data %}
+                <div class="w-full h-96">
+                    <canvas id="chart-{{ loop.index }}"></canvas>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- 7. Outcome & Applications -->
+         <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-6 text-center">Outcome & Applications</h2>
+            <p class="text-lg text-center max-w-4xl mx-auto text-slate-300">
+                The analysis successfully translated raw match data into a series of actionable insights. The key outcome was the creation of a comprehensive performance report that debunked common myths and highlighted statistically significant factors influencing match results. These findings can be directly applied by team analysts for strategic planning, by fantasy league players for making informed decisions, and by fans to gain a deeper appreciation for the nuances of the game.
+            </p>
+        </section>
+
+        <!-- 8. Reflection & Future Scope -->
+        <section class="widget p-8 md:p-12 scroll-animate">
+            <h2 class="text-4xl font-heading text-cyan-300 mb-6 text-center">Reflection & Future Scope</h2>
+            <div class="text-lg space-y-4 text-slate-300">
+                <p>This project was an excellent exercise in end-to-end exploratory data analysis. The main challenge was in framing the right questions and engineering features from the raw data to answer them effectively. It reinforced my skills in data manipulation with pandas and storytelling with matplotlib and seaborn.</p>
+                <p><strong class="text-cyan-400">Future Scope:</strong> The analysis could be extended by incorporating more advanced metrics like player impact scores or building predictive models to forecast match winners based on historical data and conditions. Additionally, incorporating player auction data could reveal insights into the financial efficiency of team selections.</p>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- DYNAMIC DATA FROM BACKEND ---
+    const chartsData = {{ charts_data | tojson }};
+
+    // --- Dynamic Chart.js Initialization ---
+    Chart.defaults.font.family = "'Share Tech Mono', monospace";
+    Chart.defaults.color = '#cbd5e1'; // slate-300
+
+    chartsData.forEach((chartConfig, index) => {
+        const ctx = document.getElementById(`chart-${index + 1}`).getContext('2d');
+        new Chart(ctx, {
+            type: chartConfig.type,
+            data: {
+                labels: chartConfig.labels,
+                datasets: [{
+                    label: chartConfig.label,
+                    data: chartConfig.data,
+                    backgroundColor: [
+                        'rgba(0, 255, 255, 0.4)',
+                        'rgba(139, 92, 246, 0.4)',
+                        'rgba(217, 70, 239, 0.4)',
+                        'rgba(249, 115, 22, 0.4)',
+                        'rgba(14, 165, 233, 0.4)',
+                        'rgba(132, 204, 22, 0.4)'
+                    ],
+                    borderColor: [
+                        '#00ffff',
+                        '#8b5cf6',
+                        '#d946ef',
+                        '#f97316',
+                        '#0ea5e9',
+                        '#84cc16'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 5,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: chartConfig.title,
+                        font: { family: "'Orbitron', sans-serif", size: 24 },
+                        color: '#e0eafc',
+                        padding: { bottom: 20 }
+                    },
+                    legend: {
+                        display: chartConfig.type === 'pie',
+                        position: 'bottom',
+                        labels: { color: '#94a3b8' }
+                    }
+                },
+                scales: {
+                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(0, 255, 255, 0.1)' } },
+                    x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(0, 255, 255, 0.1)' } }
+                }
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

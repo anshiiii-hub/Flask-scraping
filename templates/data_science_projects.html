@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Data Science Projects - Anshita Dawar{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .widget {
+        background: rgba(10, 20, 40, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 255, 255, 0.2);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+        position: relative;
+        background-image: linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 20px 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .widget:hover {
+       border-color: rgba(0, 255, 255, 0.5);
+       box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);
+       transform: translateY(-5px);
+    }
+    
+    .scroll-animate {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .scroll-animate.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="min-h-screen">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div class="space-y-16">
+            
+            <section class="widget p-8 text-center scroll-animate">
+                <h1 class="text-5xl md:text-7xl text-cyan-300 font-heading font-bold">Data Science Missions</h1>
+                <p class="text-lg text-slate-300 max-w-4xl mx-auto mt-6">
+                   This section showcases my work in transforming raw data into strategic assets. Each project represents a deep dive into a different dataset, employing statistical analysis, machine learning, and visualization to extract meaningful patterns and predictive insights.
+                </p>
+            </section>
+
+            <section class="widget p-8 md:p-12 scroll-animate">
+               <h2 class="text-4xl font-heading text-cyan-300 mb-12 text-center">Core Competencies</h2>
+               <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                   <div class="p-4">
+                        <svg class="w-16 h-16 mx-auto mb-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                       <h3 class="font-bold text-xl mb-2 font-heading text-white">Data Analysis</h3>
+                       <p class="text-slate-400">Leveraging Python libraries like Pandas and NumPy to clean, transform, and analyze complex datasets.</p>
+                   </div>
+                   <div class="p-4">
+                        <svg class="w-16 h-16 mx-auto mb-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+                       <h3 class="font-bold text-xl mb-2 font-heading text-white">Machine Learning</h3>
+                       <p class="text-slate-400">Building and evaluating predictive models using Scikit-learn for classification, regression, and clustering tasks.</p>
+                   </div>
+                   <div class="p-4">
+                        <svg class="w-16 h-16 mx-auto mb-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                       <h3 class="font-bold text-xl mb-2 font-heading text-white">Data Visualization</h3>
+                       <p class="text-slate-400">Creating compelling visual narratives with Matplotlib, Seaborn, and Chart.js to communicate findings effectively.</p>
+                   </div>
+               </div>
+           </section>
+
+            <section class="scroll-animate space-y-12">
+               <h2 class="text-4xl font-heading text-cyan-300 text-center">Mission Logs</h2>
+               
+                {% for project in projects %}
+                <a href="{{ project.url }}" class="widget p-6 block group relative overflow-hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                        <div class="relative overflow-hidden rounded-lg">
+                            <img src="{{ url_for('static', filename=project.image) }}" alt="{{ project.title }}" class="w-full h-auto transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="lg:col-span-2">
+                            <h3 class="font-bold text-2xl mb-4 font-heading text-white">{{ project.title }}</h3>
+                            <p class="text-md text-slate-300 mb-4"><strong class="text-cyan-300">Objective:</strong> {{ project.objective }}</p>
+                            <p class="text-md text-slate-300"><strong class="text-cyan-300">Key Insight:</strong> {{ project.insight }}</p>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                        <span class="text-2xl font-heading text-cyan-300 border-2 border-cyan-300 rounded-lg px-6 py-3">[ VIEW ANALYSIS ]</span>
+                    </div>
+                </a>
+                {% endfor %}
+
+            </section>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- Scroll-triggered Fade-in Animation ---
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+            }
+        });
+    }, { rootMargin: '0px', threshold: 0.1 });
+
+    document.querySelectorAll('.scroll-animate').forEach(section => {
+        observer.observe(section);
+    });
+
+    // --- Audio Feedback for Widgets ---
+    const widgets = document.querySelectorAll('.widget');
+    const cardSynth = new Tone.FMSynth({
+       harmonicity: 3,
+       modulationIndex: 10,
+       envelope: { attack: 0.01, decay: 0.2, release: 0.5 }
+    }).toDestination();
+    
+    let canPlaySound = true;
+
+    widgets.forEach(card => {
+       card.addEventListener('mouseenter', () => {
+           if (canPlaySound) {
+               canPlaySound = false;
+               cardSynth.triggerAttackRelease("G4", "16n");
+               setTimeout(() => {
+                   canPlaySound = true;
+               }, 100); 
+           }
+       });
+    });
+});
+</script>
+{% endblock %}

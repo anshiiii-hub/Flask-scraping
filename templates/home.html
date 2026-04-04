@@ -1,72 +1,369 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Scraping Showcase</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Caveat', cursive;
-        }
-    </style>
-</head>
-<body class="bg-gray-50">
-    <!-- Main container -->
-    <div class="min-h-screen flex flex-col items-center justify-center p-4">
-        <div class="text-center w-full max-w-6xl">
-            <!-- Main Heading -->
-            <h1 class="text-6xl md:text-8xl text-gray-700 mb-4">
-                My Web Scraping Projects
-            </h1>
-            <!-- Subheading -->
-            <p class="text-xl md:text-2xl text-gray-500 mb-12">
-                Select a project to view the scraped data and visualizations.
-            </p>
+{% extends "base.html" %}
 
-            <!-- Project Buttons Container -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project: Books to Scrape -->
-                <a href="/books-to-scrape" class="block p-8 bg-violet-200 text-violet-800 rounded-2xl shadow-lg hover:bg-violet-300 hover:scale-105 transition-all duration-300 ease-in-out">
-                    <h2 class="text-4xl font-bold mb-2">Books To Scrape</h2>
-                    <p class="text-lg">Data from a fictional online bookstore.</p>
-                </a>
+{% block title %}Anshita's Portfolio | AI Initialization{% endblock %}
 
-                <!-- Project: Amazon Facewash -->
-                <a href="/amazon-facewash" class="block p-8 bg-orange-200 text-orange-800 rounded-2xl shadow-lg hover:bg-orange-300 hover:scale-105 transition-all duration-300 ease-in-out">
-                    <h2 class="text-4xl font-bold mb-2">Amazon Facewash</h2>
-                    <p class="text-lg">Top facewash products from Amazon.</p>
-                </a>
+{% block extra_styles %}
+<style>
+    #scene-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        cursor: grab;
+    }
+    #scene-container:active {
+        cursor: grabbing;
+    }
+    .content-overlay {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        padding: 1rem;
+    }
+    .main-heading {
+        text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    }
+    .main-heading.hidden {
+        opacity: 0;
+    }
+    #activate-btn {
+        background: transparent;
+        border: 2px solid #00ffff;
+        color: #00ffff;
+        padding: 1rem 2.5rem;
+        font-size: 1.25rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.4s ease-in-out;
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), inset 0 0 10px rgba(0, 255, 255, 0.3);
+        text-shadow: 0 0 10px #00ffff;
+        opacity: 1;
+        transform: scale(1);
+    }
+    #activate-btn.hidden {
+        opacity: 0;
+        transform: scale(0.5);
+        pointer-events: none;
+    }
+    #activate-btn:hover {
+        background: #00ffff;
+        color: #020412;
+        box-shadow: 0 0 30px #00ffff, inset 0 0 10px #fff;
+    }
+    /* Terminal Style */
+    .terminal-window {
+        opacity: 0;
+        transform: scale(0.9);
+        pointer-events: none;
+        background: rgba(10, 25, 47, 0.3);
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 8px;
+        padding: 2rem;
+        width: 90%;
+        max-width: 700px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+    .terminal-window.visible {
+        opacity: 1;
+        transform: scale(1);
+        pointer-events: auto;
+        animation: glitch-in 0.5s forwards;
+    }
+    @keyframes glitch-in {
+        0% { transform: scale(0.9) translate(5px, -5px); opacity: 0; }
+        25% { transform: scale(1) translate(-5px, 5px); }
+        50% { transform: scale(1) translate(5px, -5px); }
+        75% { transform: scale(1) translate(-5px, 5px); }
+        100% { transform: scale(1) translate(0, 0); opacity: 1; }
+    }
+    .terminal-text {
+        text-align: left;
+        min-height: 120px;
+    }
+    .typing-cursor {
+        display: inline-block;
+        width: 10px;
+        height: 1.2rem;
+        background-color: #00ffff;
+        animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    
+    .explore-button {
+        margin-top: 1.5rem;
+        font-size: 1.25rem;
+        color: #00ffff;
+        background-color: transparent;
+        border: 2px solid #00ffff;
+        padding: 0.75rem 2rem;
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    .explore-button.visible {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.5s;
+    }
+    .explore-button:hover {
+        background-color: #00ffff;
+        color: #020412;
+        box-shadow: 0 0 20px #00ffff;
+    }
+    /* Scanline Effect */
+    #scanline {
+        position: fixed;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: rgba(0, 255, 255, 0.5);
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+        z-index: 100;
+        display: none;
+    }
+    @keyframes scan {
+        0% { top: -10%; }
+        100% { top: 110%; }
+    }
+</style>
+{% endblock %}
 
-                <!-- Project: Flipkart Laptops -->
-                <a href="/flipkart-laptops" class="block p-8 bg-sky-200 text-sky-800 rounded-2xl shadow-lg hover:bg-sky-300 hover:scale-105 transition-all duration-300 ease-in-out">
-                    <h2 class="text-4xl font-bold mb-2">Flipkart Laptops</h2>
-                    <p class="text-lg">Latest laptop listings from Flipkart.</p>
-                </a>
+{% block content %}
+<div id="scene-container"></div>
+<div id="scanline"></div>
 
-                <!-- Project: Goodreads Quotes -->
-                <a href="/goodreads-quotes" class="block p-8 bg-lime-200 text-lime-800 rounded-2xl shadow-lg hover:bg-lime-300 hover:scale-105 transition-all duration-300 ease-in-out">
-                    <h2 class="text-4xl font-bold mb-2">Goodreads Quotes</h2>
-                    <p class="text-lg">Popular and inspiring quotes.</p>
-                </a>
-                
-                <!-- Project: Top Mutual Funds -->
-                <a href="/top-mutual-funds" class="block p-8 bg-teal-200 text-teal-800 rounded-2xl shadow-lg hover:bg-teal-300 hover:scale-105 transition-all duration-300 ease-in-out">
-                    <h2 class="text-4xl font-bold mb-2">Top Mutual Funds</h2>
-                    <p class="text-lg">Top 25 performing mutual funds.</p>
-                </a>
-
-                <!-- Project: Crypto Gainers -->
-                <a href="/crypto-gainers" class="block p-8 bg-fuchsia-200 text-fuchsia-800 rounded-2xl shadow-lg hover:bg-fuchsia-300 hover:scale-105 transition-all duration-300 ease-in-out">
-                    <h2 class="text-4xl font-bold mb-2">Crypto Gainers</h2>
-                    <p class="text-lg">Top 25 gainer cryptocurrencies.</p>
-                </a>
-
-            </div>
-        </div>
+<div class="content-overlay">
+    <div class="h-48"></div> <!-- Spacer for the 3D model -->
+    <div id="main-heading" class="main-heading mb-8">
+        <h1 class="text-3xl md:text-4xl font-orbitron text-white">Summer Industrial Training</h1>
+        <h2 class="text-xl md:text-2xl text-cyan-400">in Data Analytics and Engineering</h2>
     </div>
-</body>
-</html>
+    <button id="activate-btn">▶️ ACTIVATE AI</button>
+    <div id="terminal-window" class="terminal-window">
+        <p id="terminal-text" class="terminal-text text-lg"></p>
+        <a href="{{ url_for('projects') }}" id="explore-button" class="explore-button inline-block">Explore Projects</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+    // --- DOM Elements ---
+    const container = document.getElementById('scene-container');
+    const activateBtn = document.getElementById('activate-btn');
+    const mainHeading = document.getElementById('main-heading');
+    const terminalWindow = document.getElementById('terminal-window');
+    const terminalTextEl = document.getElementById('terminal-text');
+    const exploreButton = document.getElementById('explore-button');
+    const scanline = document.getElementById('scanline');
+
+    // --- Three.js Scene Setup ---
+    let scene, camera, renderer, neuralNetwork;
+    let particles, linesGroup;
+    const layers = 5;
+    const nodesPerLayer = 10;
+    const layerDistance = 15;
+    const nodeRadius = 0.5;
+    let activationProgress = 0;
+    let isActivating = false;
+    const mouse = new THREE.Vector2();
+    const clock = new THREE.Clock();
+
+    function init() {
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 50;
+
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        neuralNetwork = new THREE.Group();
+        linesGroup = new THREE.Group();
+        neuralNetwork.add(linesGroup);
+        scene.add(neuralNetwork);
+
+        // --- Create Neural Network Nodes & Connections ---
+        const nodeGeometry = new THREE.SphereGeometry(nodeRadius, 16, 16);
+        const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ffff, transparent: true, opacity: 0.2 });
+        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, transparent: true, opacity: 0.1 });
+        
+        let allNodes = [];
+
+        for (let i = 0; i < layers; i++) {
+            let layerNodes = [];
+            for (let j = 0; j < nodesPerLayer; j++) {
+                const node = new THREE.Mesh(nodeGeometry, nodeMaterial.clone());
+                const angle = (j / nodesPerLayer) * Math.PI * 2;
+                const radius = 15;
+                node.position.x = Math.cos(angle) * radius;
+                node.position.y = Math.sin(angle) * radius;
+                node.position.z = (i - (layers - 1) / 2) * layerDistance;
+                neuralNetwork.add(node);
+                layerNodes.push(node);
+            }
+            allNodes.push(layerNodes);
+        }
+
+        // Create connections
+        for (let i = 0; i < layers - 1; i++) {
+            for (let j = 0; j < nodesPerLayer; j++) {
+                for (let k = 0; k < nodesPerLayer; k++) {
+                    if (Math.random() > 0.7) { 
+                        const points = [allNodes[i][j].position, allNodes[i+1][k].position];
+                        const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+                        const line = new THREE.Line(lineGeometry, lineMaterial.clone());
+                        linesGroup.add(line);
+                    }
+                }
+            }
+        }
+
+
+        // --- Create Data Stream Particles ---
+        const particleCount = 200;
+        const particleGeometry = new THREE.BufferGeometry();
+        const particlePositions = new Float32Array(particleCount * 3);
+        for (let i = 0; i < particleCount; i++) {
+            particlePositions[i * 3] = (Math.random() - 0.5) * 200;
+            particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 200;
+            particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 200;
+        }
+        particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+        const particleMaterial = new THREE.PointsMaterial({ color: 0x58a6ff, size: 0.3, transparent: true, opacity: 0 });
+        particles = new THREE.Points(particleGeometry, particleMaterial);
+        scene.add(particles);
+
+        // --- Event Listeners ---
+        window.addEventListener('resize', onWindowResize);
+        activateBtn.addEventListener('click', onActivateClick);
+        container.addEventListener('mousedown', onMouseDown);
+        window.addEventListener('mousemove', onWindowMouseMove);
+    }
+    
+    // --- Mouse Interaction ---
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
+    
+    function onMouseDown(e) {
+        isDragging = true;
+        previousMousePosition = { x: e.clientX, y: e.clientY };
+        container.addEventListener('mousemove', onDragMove);
+        container.addEventListener('mouseup', onMouseUp);
+    }
+
+    function onDragMove(e) {
+        if (!isDragging) return;
+        const deltaMove = {
+            x: e.clientX - previousMousePosition.x,
+            y: e.clientY - previousMousePosition.y
+        };
+        neuralNetwork.rotation.y += deltaMove.x * 0.005;
+        neuralNetwork.rotation.x += deltaMove.y * 0.005;
+        previousMousePosition = { x: e.clientX, y: e.clientY };
+    }
+
+    function onMouseUp() {
+        isDragging = false;
+        container.removeEventListener('mousemove', onDragMove);
+        container.removeEventListener('mouseup', onMouseUp);
+    }
+    
+    function onWindowMouseMove(e) {
+        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    }
+
+    const terminalTexts = [
+        "AI Initialized. This portfolio showcases projects following the AI project cycle — from data collection and preprocessing to analysis, visualization, model building, and insights generation.",
+        "System Online. Exploring the intersection of data engineering and machine learning. This portfolio details the journey of building intelligent systems from the ground up.",
+        "Activation Complete. Welcome. This collection highlights end-to-end data solutions, demonstrating skills in analytics, model deployment, and data pipeline architecture."
+    ];
+
+    function onActivateClick() {
+        if (isActivating) return;
+        isActivating = true;
+        
+        activateBtn.classList.add('hidden');
+        mainHeading.classList.add('hidden');
+        
+        // Trigger scanline
+        scanline.style.display = 'block';
+        scanline.style.animation = 'scan 1.5s ease-out forwards';
+        
+        particles.material.opacity = 1;
+
+        setTimeout(() => {
+            terminalWindow.classList.add('visible');
+            const randomIndex = Math.floor(Math.random() * terminalTexts.length);
+            const text = terminalTexts[randomIndex];
+            typeWriter(terminalTextEl, text, 40);
+        }, 3000);
+    }
+
+    async function typeWriter(element, text, speed) {
+        element.innerHTML = "> ";
+        const cursor = document.createElement('span');
+        cursor.classList.add('typing-cursor');
+        element.appendChild(cursor);
+
+        for (let i = 0; i < text.length; i++) {
+            cursor.before(text.charAt(i));
+            await new Promise(resolve => setTimeout(resolve, speed));
+        }
+        cursor.remove();
+        exploreButton.classList.add('visible');
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        const elapsedTime = clock.getElapsedTime();
+        
+        if(!isDragging){
+            // Subtle rotation based on mouse position
+            neuralNetwork.rotation.y += (mouse.x * 0.1 - neuralNetwork.rotation.y) * 0.02;
+            neuralNetwork.rotation.x += (-mouse.y * 0.1 - neuralNetwork.rotation.x) * 0.02;
+        }
+
+        if (isActivating) {
+            const positions = particles.geometry.attributes.position.array;
+            for (let i = 0; i < positions.length; i += 3) {
+                positions[i] *= 0.98;
+                positions[i+1] *= 0.98;
+                positions[i+2] *= 0.98;
+                if (Math.abs(positions[i]) < 0.1 && Math.abs(positions[i+1]) < 0.1 && Math.abs(positions[i+2]) < 0.1) {
+                    positions[i] = (Math.random() - 0.5) * 200;
+                    positions[i+1] = (Math.random() - 0.5) * 200;
+                    positions[i+2] = (Math.random() - 0.5) * 200;
+                }
+            }
+            particles.geometry.attributes.position.needsUpdate = true;
+        }
+
+        renderer.render(scene, camera);
+    }
+
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    init();
+    animate();
+</script>
+{% endblock %}

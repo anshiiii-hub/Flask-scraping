@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}AI/ML Projects - Coming Soon{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .progress-bar-container {
+        background-color: rgba(0, 255, 255, 0.1);
+        border: 1px solid rgba(0, 255, 255, 0.2);
+        border-radius: 9999px;
+        padding: 4px;
+    }
+    #progress-bar {
+        background: linear-gradient(90deg, #00ffff, #8b5cf6);
+        height: 10px;
+        border-radius: 9999px;
+        width: 0%;
+        animation: load 8s ease-in-out infinite;
+    }
+    @keyframes load {
+        0% { width: 0%; }
+        100% { width: 100%; }
+    }
+
+    .terminal-text::after {
+        content: '▋';
+        animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+        50% { opacity: 0; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center">
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div class="widget p-8 text-center">
+            <h1 class="text-5xl md:text-7xl text-cyan-300 font-heading font-bold mb-4">AI/ML Projects</h1>
+            <p class="text-lg text-slate-300 max-w-2xl mx-auto">
+                New intelligent systems are currently in training. Detailed case files for my AI and Machine Learning projects will be declassified soon. Please stand by.
+            </p>
+
+            <div class="mt-12">
+                <p id="terminal-text" class="text-lg text-green-400 terminal-text"></p>
+                <div class="progress-bar-container mt-4">
+                    <div id="progress-bar"></div>
+                </div>
+            </div>
+
+            <div class="mt-12">
+                <a href="/projects" class="text-cyan-300 hover:text-white font-bold inline-flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>
+                    Return to Project Matrix
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- Terminal Typing Effect ---
+    const terminalElement = document.getElementById('terminal-text');
+    const lines = ["TRAINING MODEL...", "EPOCH 23/100 - LOSS: 0.1138", "VALIDATION ACCURACY: 94.7%", "COMPILING CASE FILES..."];
+    let lineIndex = 0;
+    let charIndex = 0;
+
+    function type() {
+        if (lineIndex < lines.length) {
+            if (charIndex < lines[lineIndex].length) {
+                terminalElement.textContent += lines[lineIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, 50);
+            } else {
+                lineIndex++;
+                charIndex = 0;
+                setTimeout(() => {
+                    if (lineIndex < lines.length) terminalElement.textContent = '';
+                    type();
+                }, 2000);
+            }
+        } else {
+            // Loop back to the beginning
+            lineIndex = 0;
+            charIndex = 0;
+            terminalElement.textContent = '';
+            setTimeout(type, 2000);
+        }
+    }
+    type();
+});
+</script>
+{% endblock %}

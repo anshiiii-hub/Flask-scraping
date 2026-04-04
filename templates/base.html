@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Anshita Dawar{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Share+Tech+Mono&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .font-heading { font-family: 'Orbitron', sans-serif; }
+        .font-body { font-family: 'Share Tech Mono', monospace; }
+        
+        body {
+            background-color: #020412;
+            color: #e0eafc;
+            overflow-x: hidden;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(18, 18, 18, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 4px, 3px 100%;
+            z-index: 100;
+            pointer-events: none;
+            animation: scanline 10s linear infinite;
+        }
+        @keyframes scanline {
+            from { background-position: 0 0; }
+            to { background-position: 0 100%; }
+        }
+
+        #neural-network-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .widget {
+            background: rgba(10, 20, 40, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+            position: relative;
+            background-image: linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+    {% block extra_styles %}{% endblock %}
+</head>
+<body class="font-body">
+    <canvas id="neural-network-canvas"></canvas>
+
+    <!-- Header -->
+    <header class="py-4 px-4 sm:px-6 lg:px-8 bg-transparent fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl md:text-3xl text-white font-bold font-orbitron">Anshita Dawar</a>
+            <div class="hidden md:flex items-center">
+                <nav class="flex items-center space-x-8">
+                    <a href="/" class="text-lg text-gray-300 hover:text-white">Home</a>
+                    <a href="/about-me" class="text-lg text-gray-300 hover:text-white">About Me</a>
+                    <a href="/codroidhub" class="text-lg text-gray-300 hover:text-white">CodroidHub</a>
+                    <a href="/journey" class="text-lg text-gray-300 hover:text-white">Journey</a>
+                    <a href="/blogs" class="text-lg text-gray-300 hover:text-white">Blogs</a>
+                </nav>
+                <!-- Social Icons -->
+                <div class="flex items-center space-x-5 ml-8 pl-8 border-l border-gray-700">
+                    <a href="/github" class="text-gray-200 hover:text-white transition-colors duration-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/anshita-dawar" target="_blank" class="text-gray-200 hover:text-white transition-colors duration-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="min-h-screen pt-24">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer class="text-center py-8 relative z-10">
+        <p class="text-slate-300 text-sm">Anshita Dawar | Summer Training at CodroidHub</p>
+    </footer>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- Three.js Neural Network ---
+        const container = document.getElementById('neural-network-canvas');
+        if (container) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: container, alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            const group = new THREE.Group();
+            scene.add(group);
+
+            const nodeGeometry = new THREE.SphereGeometry(0.05, 16, 16);
+            const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ffff });
+            const nodes = [];
+            const layers = [4, 7, 7, 4];
+            const layerSpacing = 2;
+            const nodeSpacing = 0.8;
+            let totalWidth = (layers.length - 1) * layerSpacing;
+
+            layers.forEach((numNodes, i) => {
+                const layerX = -totalWidth / 2 + i * layerSpacing;
+                const totalHeight = (numNodes - 1) * nodeSpacing;
+                for (let j = 0; j < numNodes; j++) {
+                    const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+                    node.position.x = layerX;
+                    node.position.y = -totalHeight / 2 + j * nodeSpacing;
+                    group.add(node);
+                    nodes.push(node);
+                }
+            });
+
+            const lineMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, transparent: true, opacity: 0.15 });
+            let currentLayerStart = 0;
+            for (let i = 0; i < layers.length - 1; i++) {
+                const nextLayerStart = currentLayerStart + layers[i];
+                for (let j = 0; j < layers[i]; j++) {
+                    for (let k = 0; k < layers[i+1]; k++) {
+                        const points = [nodes[currentLayerStart + j].position, nodes[nextLayerStart + k].position];
+                        const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+                        const line = new THREE.Line(lineGeometry, lineMaterial);
+                        group.add(line);
+                    }
+                }
+                currentLayerStart = nextLayerStart;
+            }
+            
+            camera.position.z = 5;
+
+            let mouseX = 0, mouseY = 0;
+            document.addEventListener('mousemove', e => {
+                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                group.rotation.y += (mouseX * 0.2 - group.rotation.y) * 0.05;
+                group.rotation.x += (mouseY * 0.2 - group.rotation.x) * 0.05;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+        
+        // --- Scroll-triggered Fade-in Animation ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { rootMargin: '0px', threshold: 0.2 });
+
+        document.querySelectorAll('.scroll-animate').forEach(section => {
+            observer.observe(section);
+        });
+
+        // --- Audio Feedback for Widgets ---
+        const widgets = document.querySelectorAll('.widget');
+        const cardSynth = new Tone.FMSynth({
+           harmonicity: 3,
+           modulationIndex: 10,
+           envelope: { attack: 0.01, decay: 0.2, release: 0.5 }
+        }).toDestination();
+        
+        let canPlaySound = true;
+        const startAudio = async () => {
+            await Tone.start();
+            document.documentElement.removeEventListener('mousedown', startAudio);
+        };
+        document.documentElement.addEventListener('mousedown', startAudio);
+
+        widgets.forEach(card => {
+           card.addEventListener('mouseenter', () => {
+               if (canPlaySound) {
+                   canPlaySound = false;
+                   cardSynth.triggerAttackRelease("G4", "16n");
+                   setTimeout(() => { canPlaySound = true; }, 100); 
+               }
+           });
+        });
+    });
+    </script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

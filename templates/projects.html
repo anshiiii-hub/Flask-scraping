@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block title %}Projects - Anshita Dawar{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .lifecycle-step {
+        transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+        cursor: pointer;
+    }
+    .lifecycle-step.active, .lifecycle-step:hover {
+        background-color: rgba(0, 255, 255, 0.1);
+        border-color: rgba(0, 255, 255, 0.4);
+        transform: scale(1.1);
+    }
+    
+    .project-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+    }
+    .project-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2), 0 0 40px rgba(0, 255, 255, 0.3);
+        border-color: rgba(0, 255, 255, 0.5);
+    }
+    .project-card .view-button {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .project-card:hover .view-button {
+        opacity: 1;
+    }
+    
+    .project-card.highlight {
+        border-color: rgba(0, 255, 255, 0.8) !important;
+        box-shadow: 0 0 40px rgba(0, 255, 255, 0.5) !important;
+        opacity: 1 !important;
+        transform: scale(1.03) !important;
+    }
+    .project-card.dim {
+        opacity: 0.3;
+        transform: scale(0.98);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-16">
+    
+    <!-- Main Introduction -->
+    <div class="widget p-8 text-center scroll-animate">
+        <h1 class="text-5xl md:text-7xl text-cyan-300 font-heading font-bold">My Projects</h1>
+        <p class="text-lg text-slate-300 max-w-4xl mx-auto mt-4">
+            Summer Training in Data Analytics & Engineering — showcased through the AI/ML Project Cycle.
+        </p>
+    </div>
+
+    <!-- AI Lifecycle Diagram -->
+    <div class="widget p-8 scroll-animate">
+        <h2 class="text-4xl font-heading text-cyan-300 mb-8 text-center">AI Project Lifecycle Map</h2>
+        <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
+            <div class="lifecycle-step text-center p-2 rounded-lg border border-transparent" data-projects="web-scraping,data-science,power-bi,ai-ml"><h3 class="text-lg font-heading text-white">Problem Scoping</h3></div>
+            <div class="text-cyan-300 text-2xl font-bold hidden md:block">⟶</div>
+            <div class="lifecycle-step text-center p-2 rounded-lg border border-transparent" data-projects="web-scraping"><h3 class="text-lg font-heading text-white">Data Collection</h3></div>
+            <div class="text-cyan-300 text-2xl font-bold hidden md:block">⟶</div>
+            <div class="lifecycle-step text-center p-2 rounded-lg border border-transparent" data-projects="data-science"><h3 class="text-lg font-heading text-white">Data Preprocessing</h3></div>
+            <div class="text-cyan-300 text-2xl font-bold hidden md:block">⟶</div>
+            <div class="lifecycle-step text-center p-2 rounded-lg border border-transparent" data-projects="data-science,power-bi"><h3 class="text-lg font-heading text-white">Data Analysis</h3></div>
+            <div class="text-cyan-300 text-2xl font-bold hidden md:block">⟶</div>
+            <div class="lifecycle-step text-center p-2 rounded-lg border border-transparent" data-projects="power-bi"><h3 class="text-lg font-heading text-white">Data Visualization</h3></div>
+            <div class="text-cyan-300 text-2xl font-bold hidden md:block">⟶</div>
+            <div class="lifecycle-step text-center p-2 rounded-lg border border-transparent" data-projects="ai-ml"><h3 class="text-lg font-heading text-white">Model Building</h3></div>
+            <div class="text-cyan-300 text-2xl font-bold hidden md:block">⟶</div>
+            <div class="lifecycle-step text-center p-2 rounded-lg border border-transparent" data-projects="ai-ml"><h3 class="text-lg font-heading text-white">Evaluation</h3></div>
+            <div class="text-cyan-300 text-2xl font-bold hidden md:block">⟶</div>
+            <div class="lifecycle-step text-center p-2 rounded-lg border border-transparent" data-projects="ai-ml,power-bi"><h3 class="text-lg font-heading text-white">Deployment & Insights</h3></div>
+        </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 scroll-animate">
+        
+        <a href="/projects/web-scraping" class="widget p-8 flex flex-col text-left project-card" data-category="web-scraping">
+            <h2 class="text-3xl font-heading text-white text-center">Web Scraping</h2>
+            <div class="mt-4 flex-grow">
+                <h4 class="font-bold text-cyan-300">Mission Brief:</h4>
+                <p class="text-slate-300 mt-1 text-sm">The foundational skill of acquiring raw data from the web. This project demonstrates the ability to programmatically extract and structure information, turning the vastness of the internet into a usable dataset for analysis and model training.</p>
+            </div>
+            <div class="mt-4">
+                <h4 class="font-bold text-cyan-300 text-center">Key Concepts:</h4>
+                <div class="flex justify-center flex-wrap gap-2 mt-2">
+                    <span class="bg-sky-900/50 text-sky-300 text-xs font-bold px-3 py-1 rounded-full">Python</span>
+                    <span class="bg-sky-900/50 text-sky-300 text-xs font-bold px-3 py-1 rounded-full">BeautifulSoup</span>
+                    <span class="bg-sky-900/50 text-sky-300 text-xs font-bold px-3 py-1 rounded-full">Requests</span>
+                    <span class="bg-sky-900/50 text-sky-300 text-xs font-bold px-3 py-1 rounded-full">Data Extraction</span>
+                </div>
+            </div>
+            <div class="absolute bottom-4 right-4 view-button"><span class="font-bold text-cyan-300">View Projects →</span></div>
+        </a>
+
+        <a href="/projects/data-science" class="widget p-8 flex flex-col text-left project-card" data-category="data-science">
+            <h2 class="text-3xl font-heading text-white text-center">Data Science</h2>
+            <div class="mt-4 flex-grow">
+                <h4 class="font-bold text-violet-300">Mission Brief:</h4>
+                <p class="text-slate-300 mt-1 text-sm">Transforming raw data into actionable intelligence. This involves cleaning, exploring, and applying statistical methods to uncover hidden patterns, test hypotheses, and build a narrative from the numbers that drives strategic decisions.</p>
+            </div>
+            <div class="mt-4">
+                <h4 class="font-bold text-violet-300 text-center">Key Concepts:</h4>
+                <div class="flex justify-center flex-wrap gap-2 mt-2">
+                    <span class="bg-violet-900/50 text-violet-300 text-xs font-bold px-3 py-1 rounded-full">Pandas</span>
+                    <span class="bg-violet-900/50 text-violet-300 text-xs font-bold px-3 py-1 rounded-full">NumPy</span>
+                    <span class="bg-violet-900/50 text-violet-300 text-xs font-bold px-3 py-1 rounded-full">EDA</span>
+                    <span class="bg-violet-900/50 text-violet-300 text-xs font-bold px-3 py-1 rounded-full">Statistics</span>
+                </div>
+            </div>
+            <div class="absolute bottom-4 right-4 view-button"><span class="font-bold text-cyan-300">View Projects →</span></div>
+        </a>
+
+        <a href="/power-bi" class="widget p-8 flex flex-col text-left project-card" data-category="power-bi">
+            <h2 class="text-3xl font-heading text-white text-center">Power BI</h2>
+            <div class="mt-4 flex-grow">
+                <h4 class="font-bold text-pink-300">Mission Brief:</h4>
+                <p class="text-slate-300 mt-1 text-sm">The art of data storytelling. This project focuses on creating interactive and intuitive dashboards that empower stakeholders to explore complex data, identify trends, and gain insights at a glance, bridging the gap between raw analysis and business value.</p>
+            </div>
+            <div class="mt-4">
+                <h4 class="font-bold text-pink-300 text-center">Key Concepts:</h4>
+                <div class="flex justify-center flex-wrap gap-2 mt-2">
+                    <span class="bg-pink-900/50 text-pink-300 text-xs font-bold px-3 py-1 rounded-full">Dashboards</span>
+                    <span class="bg-pink-900/50 text-pink-300 text-xs font-bold px-3 py-1 rounded-full">DAX</span>
+                    <span class="bg-pink-900/50 text-pink-300 text-xs font-bold px-3 py-1 rounded-full">Data Modeling</span>
+                    <span class="bg-pink-900/50 text-pink-300 text-xs font-bold px-3 py-1 rounded-full">KPIs</span>
+                </div>
+            </div>
+            <div class="absolute bottom-4 right-4 view-button"><span class="font-bold text-cyan-300">View Projects →</span></div>
+        </a>
+
+        <a href="/aiml" class="widget p-8 flex flex-col text-left project-card" data-category="ai-ml">
+            <h2 class="text-3xl font-heading text-white text-center">AI / ML</h2>
+            <div class="mt-4 flex-grow">
+                <h4 class="font-bold text-amber-300">Mission Brief:</h4>
+                <p class="text-slate-300 mt-1 text-sm">Engineering intelligence by training models to learn from data. This discipline covers building predictive algorithms, evaluating their performance, and deploying them to automate tasks, make forecasts, and create intelligent applications.</p>
+            </div>
+            <div class="mt-4">
+                <h4 class="font-bold text-amber-300 text-center">Key Concepts:</h4>
+                <div class="flex justify-center flex-wrap gap-2 mt-2">
+                    <span class="bg-amber-900/50 text-amber-300 text-xs font-bold px-3 py-1 rounded-full">Scikit-learn</span>
+                    <span class="bg-amber-900/50 text-amber-300 text-xs font-bold px-3 py-1 rounded-full">TensorFlow</span>
+                    <span class="bg-amber-900/50 text-amber-300 text-xs font-bold px-3 py-1 rounded-full">Regression</span>
+                    <span class="bg-amber-900/50 text-amber-300 text-xs font-bold px-3 py-1 rounded-full">Classification</span>
+                </div>
+            </div>
+            <div class="absolute bottom-4 right-4 view-button"><span class="font-bold text-cyan-300">View Projects →</span></div>
+        </a>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- Interactive Elements with Audio Feedback ---
+    const steps = document.querySelectorAll('.lifecycle-step');
+    const projects = document.querySelectorAll('.project-card');
+    
+    // Create synths for audio feedback to avoid conflicts
+    const lifecycleSynth = new Tone.Synth({
+       oscillator: { type: 'sine' },
+       envelope: { attack: 0.005, decay: 0.1, sustain: 0.3, release: 1 }
+    }).toDestination();
+
+    const cardSynth = new Tone.FMSynth({
+       harmonicity: 3,
+       modulationIndex: 10,
+       envelope: { attack: 0.01, decay: 0.2, release: 0.5 }
+    }).toDestination();
+
+    steps.forEach(step => {
+        step.addEventListener('mouseenter', () => {
+            // Play a subtle sound on hover
+            lifecycleSynth.triggerAttackRelease("C6", "8n", Tone.now());
+            
+            // Get the projects related to this lifecycle step
+            const targetProjects = step.dataset.projects.split(',');
+            
+            // Highlight relevant projects and dim others
+            projects.forEach(project => {
+                if (targetProjects.includes(project.dataset.category)) {
+                    project.classList.add('highlight');
+                    project.classList.remove('dim');
+                } else {
+                    project.classList.add('dim');
+                    project.classList.remove('highlight');
+                }
+            });
+        });
+
+        step.addEventListener('mouseleave', () => {
+            // Reset all project cards to their default state
+            projects.forEach(project => {
+                project.classList.remove('dim');
+                project.classList.remove('highlight');
+            });
+        });
+    });
+
+    projects.forEach(card => {
+       card.addEventListener('mouseenter', () => {
+           // Play a different sound for project card hover
+           cardSynth.triggerAttackRelease("G4", "16n", Tone.now());
+       });
+    });
+});
+</script>
+{% endblock %}
