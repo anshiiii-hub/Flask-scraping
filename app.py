@@ -599,4 +599,4 @@ if __name__ == '__main__':
         os.makedirs('templates')
     if not os.path.exists('data'):
         os.makedirs('data')
-    app.run(debug=False, port = 5000)
+    app.run(debug=False,port=3000,host='0.0.0.0')
